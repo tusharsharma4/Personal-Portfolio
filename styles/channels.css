@@ -1,0 +1,960 @@
+/* ==============================================================
+   CHANNEL SPECIFIC LAYOUTS & RETRO COMPONENTS
+   Pixel-perfect recreations of retro broadcast UI, SMPTE bars,
+   CRO oscilloscope lab, telemetry console, and arcade games.
+   ============================================================== */
+
+/* --- CHANNEL FRAMEWORK & TOP INNER HEADER (Image 4) --- */
+.channel-view {
+    display: none;
+    flex-direction: column;
+    height: 100%;
+    min-height: 440px;
+    animation: channelFadeIn 0.2s ease-out;
+}
+
+.channel-view.active {
+    display: flex;
+}
+
+@keyframes channelFadeIn {
+    from { opacity: 0; transform: translateY(2px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.channel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed var(--tube-phosphor);
+    margin-bottom: 14px;
+    font-size: 14px;
+    letter-spacing: 1.5px;
+}
+
+.channel-badge-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+}
+
+.ch-badge-box {
+    border: 1px solid var(--tube-phosphor);
+    padding: 2px 7px;
+    border-radius: 3px;
+    font-size: 13px;
+}
+
+.ch-signal-meta {
+    font-size: 11px;
+    opacity: 0.8;
+    letter-spacing: 1px;
+}
+
+/* --- BOTTOM INNER SCREEN FOOTER BAR (Image 4) --- */
+.channel-inner-footer {
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px dashed rgba(245, 158, 11, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 12px;
+}
+
+.inner-nav-buttons {
+    display: flex;
+    gap: 6px;
+}
+
+.inner-nav-btn {
+    background: transparent;
+    border: 1px solid var(--tube-phosphor);
+    color: var(--tube-phosphor);
+    font-family: var(--font-crt);
+    font-size: 12px;
+    letter-spacing: 1px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.inner-nav-btn:hover {
+    background: var(--tube-phosphor);
+    color: #000;
+    box-shadow: 0 0 8px var(--tube-glow);
+}
+
+.student-signature {
+    font-size: 11px;
+    letter-spacing: 1px;
+    opacity: 0.85;
+}
+
+/* ==============================================================
+   CHANNEL 0: SMPTE COLOR BARS & TV GUIDE (Image 2)
+   ============================================================== */
+.smpte-bars-container {
+    width: 100%;
+    height: 190px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    margin-bottom: 14px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+    overflow: hidden;
+    position: relative;
+}
+
+.smpte-top-row {
+    flex: 3;
+    display: flex;
+    width: 100%;
+}
+
+.smpte-bar {
+    flex: 1;
+    height: 100%;
+}
+
+/* Standard SMPTE 75% Color Bars */
+.bar-gray    { background: #bfbfbf; }
+.bar-yellow  { background: #bfbf00; }
+.bar-cyan    { background: #00bfbf; }
+.bar-green   { background: #00bf00; }
+.bar-magenta { background: #bf00bf; }
+.bar-red     { background: #bf0000; }
+.bar-blue    { background: #0000bf; }
+
+.smpte-mid-row {
+    flex: 1;
+    display: flex;
+    width: 100%;
+}
+
+.smpte-bottom-row {
+    flex: 1.5;
+    display: flex;
+    width: 100%;
+}
+
+.bar-bot-1 { flex: 1.25; background: #002244; }
+.bar-bot-2 { flex: 1.25; background: #ffffff; }
+.bar-bot-3 { flex: 1.25; background: #330055; }
+.bar-bot-4 { flex: 3.25; background: #131313; display: flex; align-items: center; justify-content: center; }
+
+.smpte-center-banner {
+    position: absolute;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 3px 16px;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 4px;
+    color: #ffffff;
+    text-shadow: 0 0 8px #ffffff;
+}
+
+.tv-guide-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.guide-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(245, 158, 11, 0.25);
+    padding: 8px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.guide-item:hover {
+    background: rgba(245, 158, 11, 0.15);
+    border-color: var(--tube-phosphor);
+    transform: translateX(3px);
+}
+
+.guide-code {
+    font-weight: bold;
+    font-size: 13px;
+    color: var(--tube-phosphor);
+}
+
+.guide-name {
+    font-size: 12px;
+    color: #ffffff;
+}
+
+.guide-desc {
+    font-size: 10px;
+    opacity: 0.65;
+}
+
+/* ==============================================================
+   CHANNEL 1: PROFILE & BIO (1989 TELETEXT STYLE)
+   ============================================================== */
+.profile-content {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.teletext-card {
+    border: 1px solid var(--tube-phosphor);
+    padding: 14px;
+    border-radius: 6px;
+    background: rgba(245, 158, 11, 0.03);
+}
+
+.profile-header-flex {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+
+.profile-avatar-frame {
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    border: 2px solid var(--tube-phosphor);
+    box-shadow: 0 0 10px var(--tube-glow);
+    overflow: hidden;
+    flex-shrink: 0;
+    background: #000;
+}
+
+.profile-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.profile-meta-col {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.profile-headline {
+    font-size: 19px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.profile-subtitle {
+    font-size: 12px;
+    opacity: 0.9;
+    color: var(--tube-phosphor);
+}
+
+.profile-contacts-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 6px;
+    font-size: 11px;
+}
+
+.contact-pill-link {
+    color: #ffffff;
+    text-decoration: none;
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    background: rgba(245, 158, 11, 0.08);
+    padding: 2px 7px;
+    border-radius: 3px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.15s ease;
+}
+
+.contact-pill-link:hover {
+    background: var(--tube-phosphor);
+    color: #000;
+}
+
+.profile-edu-box {
+    border: 1px dashed var(--tube-phosphor);
+    background: rgba(0, 0, 0, 0.35);
+    padding: 10px 12px;
+    border-radius: 4px;
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.edu-school-name {
+    font-size: 13px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.edu-degree {
+    font-size: 11px;
+    opacity: 0.85;
+}
+
+.edu-score-badge {
+    border: 1px solid var(--tube-phosphor);
+    padding: 3px 8px;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 3px;
+    background: rgba(245, 158, 11, 0.15);
+}
+
+.resume-download-btn {
+    background: rgba(245, 158, 11, 0.2);
+    border: 1px solid var(--tube-phosphor);
+    color: var(--tube-phosphor);
+    font-family: var(--font-crt);
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    font-weight: bold;
+    padding: 7px 14px;
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    transition: all 0.15s ease;
+    cursor: pointer;
+}
+
+.resume-download-btn:hover {
+    background: var(--tube-phosphor);
+    color: #000;
+    box-shadow: 0 0 10px var(--tube-glow);
+}
+
+.bio-paragraph {
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 8px;
+    margin: 12px 0;
+}
+
+.stat-box {
+    border: 1px dashed var(--tube-phosphor);
+    padding: 8px;
+    text-align: center;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.stat-value {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.stat-label {
+    font-size: 10px;
+    opacity: 0.75;
+    letter-spacing: 1px;
+}
+
+.interests-pill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.interest-pill {
+    font-size: 11px;
+    padding: 3px 8px;
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    border-radius: 3px;
+    background: rgba(245, 158, 11, 0.08);
+}
+
+/* ==============================================================
+   CHANNEL 2: TECHNICAL SKILLS & CRO LAB (Image 4!)
+   ============================================================== */
+.cro-lab-panel {
+    border: 1px solid var(--tube-phosphor);
+    border-radius: 6px;
+    padding: 10px 14px;
+    background: rgba(0, 0, 0, 0.4);
+    margin-bottom: 14px;
+}
+
+.cro-lab-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    font-weight: bold;
+}
+
+.cro-readout-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 11px;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    opacity: 0.9;
+}
+
+.cro-canvas-container {
+    position: relative;
+    width: 100%;
+    height: 140px;
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    background: #090d12;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+#croCanvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.cro-controls-strip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 11px;
+}
+
+.cro-btn-group {
+    display: flex;
+    gap: 6px;
+}
+
+.cro-tool-btn {
+    background: transparent;
+    border: 1px solid var(--tube-phosphor);
+    color: var(--tube-phosphor);
+    font-family: var(--font-crt);
+    font-size: 11px;
+    padding: 2px 7px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.cro-tool-btn:hover {
+    background: var(--tube-phosphor);
+    color: #000;
+}
+
+.cro-target-label {
+    font-size: 11px;
+    letter-spacing: 0.8px;
+    color: #ffffff;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Skills Categories & Interactive Tags */
+.skills-category-section {
+    margin-bottom: 12px;
+}
+
+.skills-cat-title {
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.skill-tags-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.skill-tag-card {
+    background: rgba(245, 158, 11, 0.06);
+    border: 1px solid var(--tube-phosphor);
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--font-crt);
+    font-size: 12px;
+    letter-spacing: 1px;
+    transition: all 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.skill-tag-card:hover, .skill-tag-card.active-probe {
+    background: var(--tube-phosphor);
+    color: #000;
+    box-shadow: 0 0 10px var(--tube-glow);
+    transform: translateY(-2px);
+    font-weight: bold;
+}
+
+/* ==============================================================
+   CHANNEL 3: EXPERIENCE & MISSION LOG
+   ============================================================== */
+.experience-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.exp-entry-card {
+    border-left: 2px solid var(--tube-phosphor);
+    padding: 8px 12px 10px 14px;
+    background: rgba(245, 158, 11, 0.03);
+    border-radius: 0 6px 6px 0;
+}
+
+.exp-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+
+.exp-role-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.exp-period-badge {
+    border: 1px solid var(--tube-phosphor);
+    padding: 1px 6px;
+    font-size: 10px;
+    border-radius: 3px;
+}
+
+.exp-org-line {
+    font-size: 12px;
+    opacity: 0.85;
+    margin-bottom: 6px;
+}
+
+.exp-summary {
+    font-size: 12px;
+    line-height: 1.5;
+    margin-bottom: 6px;
+}
+
+.exp-bullet-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.exp-bullet-list li {
+    font-size: 11px;
+    line-height: 1.5;
+    position: relative;
+    padding-left: 14px;
+    margin-bottom: 3px;
+    opacity: 0.9;
+}
+
+.exp-bullet-list li::before {
+    content: "►";
+    position: absolute;
+    left: 0;
+    font-size: 8px;
+    color: var(--tube-phosphor);
+}
+
+/* ==============================================================
+   CHANNEL 4: PROJECTS SHOWCASE ("BROADCAST ARCHIVE")
+   ============================================================== */
+.projects-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.project-carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid var(--tube-phosphor);
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.project-display-card {
+    border: 1px solid var(--tube-phosphor);
+    border-radius: 6px;
+    padding: 14px;
+    background: rgba(245, 158, 11, 0.04);
+}
+
+.prj-top-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 6px;
+}
+
+.prj-tag-badge {
+    border: 1px solid var(--tube-phosphor);
+    padding: 2px 7px;
+    font-size: 10px;
+    letter-spacing: 1px;
+    border-radius: 3px;
+}
+
+.prj-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 4px;
+}
+
+.prj-headline {
+    font-size: 12px;
+    opacity: 0.85;
+    margin-bottom: 10px;
+}
+
+.prj-description {
+    font-size: 12px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+.prj-metrics-box {
+    border: 1px dashed var(--tube-phosphor);
+    padding: 6px 10px;
+    font-size: 11px;
+    background: rgba(0, 0, 0, 0.4);
+    margin-bottom: 12px;
+    border-radius: 4px;
+}
+
+.prj-tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+}
+
+.tech-chip {
+    background: rgba(245, 158, 11, 0.12);
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    padding: 2px 7px;
+    font-size: 10px;
+    border-radius: 3px;
+}
+
+.prj-actions-row {
+    display: flex;
+    gap: 8px;
+}
+
+.prj-btn {
+    background: transparent;
+    border: 1px solid var(--tube-phosphor);
+    color: var(--tube-phosphor);
+    padding: 4px 10px;
+    font-family: var(--font-crt);
+    font-size: 12px;
+    letter-spacing: 1px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.15s ease;
+}
+
+.prj-btn:hover {
+    background: var(--tube-phosphor);
+    color: #000;
+    box-shadow: 0 0 8px var(--tube-glow);
+}
+
+/* ==============================================================
+   CHANNEL 5: ACHIEVEMENTS & CERTIFICATIONS
+   ============================================================== */
+.achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px;
+}
+
+.achievement-card {
+    border: 1px solid var(--tube-phosphor);
+    padding: 12px;
+    border-radius: 6px;
+    background: rgba(245, 158, 11, 0.03);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: all 0.15s ease;
+}
+
+.achievement-card:hover {
+    background: rgba(245, 158, 11, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+}
+
+.ach-year-tag {
+    font-size: 10px;
+    opacity: 0.75;
+    letter-spacing: 1.5px;
+}
+
+.ach-title {
+    font-size: 13px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.ach-org {
+    font-size: 11px;
+    color: var(--tube-phosphor);
+}
+
+.ach-desc {
+    font-size: 11px;
+    line-height: 1.4;
+    opacity: 0.85;
+}
+
+/* ==============================================================
+   CHANNEL 6: RETRO ARCADE (PONG & SNAKE)
+   ============================================================== */
+.arcade-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.arcade-canvas-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 560px;
+    height: 270px;
+    border: 1px solid var(--tube-phosphor);
+    border-radius: 6px;
+    overflow: hidden;
+    background: #04070a;
+}
+
+#arcadeCanvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.arcade-controls-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.arcade-btn {
+    background: rgba(245, 158, 11, 0.08);
+    border: 1px solid var(--tube-phosphor);
+    color: var(--tube-phosphor);
+    font-family: var(--font-crt);
+    font-size: 12px;
+    letter-spacing: 1px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.arcade-btn:hover {
+    background: var(--tube-phosphor);
+    color: #000;
+}
+
+.arcade-dpad {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.dpad-key {
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--tube-phosphor);
+    color: #fff;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.dpad-key:active {
+    background: var(--tube-phosphor);
+    color: #000;
+}
+
+/* ==============================================================
+   CHANNEL 7: SIGNAL TRANSMITTER / CONTACT TERMINAL
+   ============================================================== */
+.transmitter-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.terminal-meta-box {
+    border: 1px dashed var(--tube-phosphor);
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 11px;
+    background: rgba(0, 0, 0, 0.35);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.contact-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.form-full-width {
+    grid-column: 1 / -1;
+}
+
+.retro-field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.retro-label {
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--tube-phosphor);
+}
+
+.retro-input, .retro-textarea {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--tube-phosphor);
+    color: #ffffff;
+    font-family: var(--font-crt);
+    font-size: 13px;
+    padding: 6px 10px;
+    border-radius: 4px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.retro-input:focus, .retro-textarea:focus {
+    box-shadow: 0 0 10px var(--tube-glow);
+    background: rgba(245, 158, 11, 0.08);
+}
+
+.retro-textarea {
+    resize: none;
+    height: 60px;
+}
+
+.transmit-btn {
+    background: rgba(245, 158, 11, 0.15);
+    border: 1px solid var(--tube-phosphor);
+    color: var(--tube-phosphor);
+    font-family: var(--font-crt);
+    font-size: 14px;
+    letter-spacing: 2px;
+    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    align-self: flex-start;
+}
+
+.transmit-btn:hover {
+    background: var(--tube-phosphor);
+    color: #000;
+    box-shadow: 0 0 14px var(--tube-glow);
+}
+
+.social-frequencies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.social-freq-link {
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    background: rgba(245, 158, 11, 0.05);
+    color: #ffffff;
+    font-size: 11px;
+    letter-spacing: 1px;
+    padding: 4px 8px;
+    border-radius: 3px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.15s ease;
+}
+
+.social-freq-link:hover {
+    background: var(--tube-phosphor);
+    color: #000;
+    border-color: var(--tube-phosphor);
+}

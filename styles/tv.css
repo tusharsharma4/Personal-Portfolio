@@ -1,0 +1,562 @@
+/* ==============================================================
+   RETRO 90'S TV CHASSIS STYLES
+   Features switchable casings:
+   1. Classic Walnut Woodgrain Cabinet (Images 1-2)
+   2. 1989 Beige/Cream Lab Broadcast Monitor (Images 3-5)
+   ============================================================== */
+
+:root {
+    --bg-room: #13110e;
+    --tube-phosphor: #f59e0b; /* Default Amber P3 */
+    --tube-glow: rgba(245, 158, 11, 0.4);
+    --tube-bg: #090c10;
+    --bezel-dark: #111417;
+    --bezel-rim: #1f2328;
+    --wood-dark: #2c1a11;
+    --wood-mid: #45291b;
+    --wood-light: #6a3e28;
+    --brass-gold: #c5a059;
+    --font-crt: 'VT323', 'Courier New', monospace;
+    --font-chassis: 'Cinzel', 'Playfair Display', 'Oswald', serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    background-color: var(--bg-room);
+    background-image: 
+        radial-gradient(circle at 50% 30%, rgba(30, 24, 18, 0.8) 0%, rgba(10, 8, 6, 0.98) 85%),
+        repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15) 0px, rgba(0, 0, 0, 0.15) 1px, transparent 1px, transparent 4px);
+    color: #e5e7eb;
+    font-family: var(--font-crt);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+    padding: 16px 12px 28px;
+    user-select: none;
+}
+
+/* Room Ambience & Vignette */
+.room-container {
+    width: 100%;
+    max-width: 1100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+/* ==============================================================
+   TOP LAB BROADCAST STATUS BAR (Images 3-5)
+   ============================================================== */
+.top-status-bar {
+    width: 100%;
+    max-width: 980px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 12px;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    color: #c4b5a3;
+    text-transform: uppercase;
+}
+
+.lab-title-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #f59e0b;
+    box-shadow: 0 0 8px #f59e0b;
+    animation: pulseSlow 2s infinite ease-in-out;
+}
+
+@keyframes pulseSlow {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+.top-controls-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.top-btn {
+    background: rgba(30, 25, 20, 0.8);
+    border: 1px solid rgba(197, 160, 89, 0.35);
+    color: #d1c4b2;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-family: var(--font-crt);
+    font-size: 13px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.top-btn:hover {
+    background: rgba(60, 50, 40, 0.9);
+    border-color: #f59e0b;
+    color: #fff;
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.25);
+}
+
+.top-btn.active {
+    background: rgba(197, 160, 89, 0.2);
+    border-color: #f59e0b;
+    color: #f59e0b;
+}
+
+/* ==============================================================
+   MAIN TELEVISION CHASSIS
+   ============================================================== */
+.tv-cabinet {
+    position: relative;
+    width: 100%;
+    max-width: 980px;
+    min-height: 580px;
+    border-radius: 28px;
+    padding: 24px;
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    gap: 20px;
+    align-items: stretch;
+    transition: background 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+    box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.95),
+        0 40px 80px rgba(0, 0, 0, 0.8),
+        inset 0 2px 4px rgba(255, 255, 255, 0.25),
+        inset 0 -4px 8px rgba(0, 0, 0, 0.7);
+}
+
+/* --- THEME 1: WALNUT WOODGRAIN CABINET (Images 1-2) --- */
+.chassis-wood {
+    background: 
+        linear-gradient(90deg, 
+            rgba(0,0,0,0.5) 0%, 
+            rgba(0,0,0,0) 5%, 
+            rgba(0,0,0,0) 95%, 
+            rgba(0,0,0,0.6) 100%),
+        repeating-linear-gradient(90deg,
+            #3b2216 0px,
+            #48291b 8px,
+            #331e13 16px,
+            #523020 24px,
+            #3c2317 32px),
+        linear-gradient(180deg, #4d2d1d 0%, #2e180d 100%);
+    border: 5px solid #201108;
+    box-shadow: 
+        0 28px 60px rgba(0, 0, 0, 0.95),
+        inset 0 1px 3px rgba(255, 215, 170, 0.3),
+        inset 0 -6px 12px rgba(0, 0, 0, 0.9);
+}
+
+.chassis-wood .panel-brand {
+    color: #e4c487;
+    text-shadow: 0 1px 2px #000, 0 -1px 1px rgba(255,255,255,0.2);
+}
+
+/* --- THEME 2: 1989 BEIGE LAB CASING (Images 3-5) --- */
+.chassis-beige {
+    background: 
+        radial-gradient(ellipse at 30% 20%, #c5bca8 0%, #a89d87 60%, #877b65 100%);
+    border: 5px solid #6b614e;
+    box-shadow: 
+        0 28px 60px rgba(0, 0, 0, 0.9),
+        inset 0 2px 4px rgba(255, 255, 255, 0.45),
+        inset 0 -6px 14px rgba(0, 0, 0, 0.6);
+}
+
+.chassis-beige .panel-brand {
+    color: #3b352a;
+    text-shadow: 0 1px 1px rgba(255,255,255,0.4);
+}
+
+.chassis-beige .tv-bezel {
+    border-color: #554d3f;
+    background: #111417;
+}
+
+.chassis-beige .control-panel {
+    background: transparent;
+    border-left: 1px solid rgba(0,0,0,0.12);
+}
+
+.chassis-beige .speaker-louvers {
+    background: repeating-linear-gradient(180deg,
+        #443e33 0px, #443e33 7px,
+        #2a261e 7px, #2a261e 13px);
+    box-shadow: inset 0 2px 5px #15130f, 0 1px 0 rgba(255,255,255,0.2);
+}
+
+/* ==============================================================
+   SCREEN BEZEL & CRT CONTAINER
+   ============================================================== */
+.tv-screen-section {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tv-bezel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 520px;
+    background: radial-gradient(circle at 50% 50%, #15181b 0%, #0d0f11 85%, #050607 100%);
+    border-radius: 24px;
+    padding: 16px;
+    border: 10px solid #1c2024;
+    box-shadow: 
+        inset 0 6px 14px rgba(0, 0, 0, 0.95),
+        inset 0 -4px 10px rgba(255, 255, 255, 0.08),
+        0 4px 12px rgba(0, 0, 0, 0.6);
+    display: flex;
+    overflow: hidden;
+}
+
+/* ==============================================================
+   RIGHT-SIDE MECHANICAL CONTROL PANEL
+   ============================================================== */
+.control-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 12px 12px;
+    background: rgba(0, 0, 0, 0.18);
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.panel-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.panel-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-family: 'Cinzel', var(--font-crt);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #c5a059;
+}
+
+.chassis-beige .panel-label {
+    color: #4b4233;
+}
+
+/* --- RED TRANSLUCENT POWER BUTTON --- */
+.power-btn-housing {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, #2a2c30 0%, #101214 80%);
+    box-shadow: 
+        0 3px 6px rgba(0, 0, 0, 0.6),
+        inset 0 2px 4px rgba(0,0,0,0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.power-btn {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    background: radial-gradient(circle at 35% 30%, #ef4444 0%, #b91c1c 55%, #7f1d1d 95%);
+    box-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.6),
+        inset 0 2px 4px rgba(255, 255, 255, 0.45),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.6);
+    transition: all 0.12s ease;
+    outline: none;
+}
+
+.power-btn:active {
+    transform: translateY(2px) scale(0.97);
+    box-shadow: 
+        0 1px 3px rgba(0, 0, 0, 0.7),
+        inset 0 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+/* Glowing Aura when TV is ON */
+.power-btn.is-on {
+    background: radial-gradient(circle at 35% 30%, #ff6b6b 0%, #dc2626 50%, #991b1b 95%);
+    box-shadow: 
+        0 0 18px #ef4444,
+        0 0 35px rgba(239, 68, 68, 0.6),
+        inset 0 2px 4px rgba(255, 255, 255, 0.6),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.power-btn.is-on::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(239, 68, 68, 0.35) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+/* --- ROTARY CHANNEL TUNER KNOB --- */
+.rotary-knob-container {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 4px 0;
+}
+
+.knob-bezel {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 45% 45%, #2d3238 0%, #15181b 90%);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7), inset 0 2px 3px rgba(255,255,255,0.15);
+}
+
+.knob-wheel {
+    position: relative;
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    cursor: grab;
+    background: 
+        conic-gradient(from 0deg,
+            #d8d8d8 0deg, #6b7280 45deg, #e5e7eb 90deg, #4b5563 135deg,
+            #f3f4f6 180deg, #6b7280 225deg, #e5e7eb 270deg, #4b5563 315deg,
+            #d8d8d8 360deg);
+    border: 2px solid #374151;
+    box-shadow: 
+        0 6px 12px rgba(0, 0, 0, 0.7),
+        inset 0 1px 2px rgba(255, 255, 255, 0.6),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.7);
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.knob-wheel:active {
+    cursor: grabbing;
+}
+
+/* White pointer marker notch */
+.knob-indicator {
+    position: absolute;
+    top: 5px;
+    width: 4px;
+    height: 14px;
+    background: #ffffff;
+    border-radius: 2px;
+    box-shadow: 0 0 4px #ffffff, 0 1px 2px rgba(0,0,0,0.8);
+}
+
+/* Inner metallic cap */
+.knob-cap {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #9ca3af 0%, #374151 85%);
+    box-shadow: inset 0 1px 2px rgba(255,255,255,0.4), 0 2px 4px rgba(0,0,0,0.6);
+}
+
+/* --- SPEAKER GRILL --- */
+.speaker-louvers {
+    width: 90%;
+    height: 80px;
+    border-radius: 6px;
+    background: repeating-linear-gradient(180deg,
+        #1d1915 0px, #1d1915 6px,
+        #0b0a09 6px, #0b0a09 11px);
+    box-shadow: 
+        inset 0 3px 6px rgba(0, 0, 0, 0.9),
+        0 1px 1px rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    margin: 8px 0;
+}
+
+/* --- SOUND ON / SFX BADGE --- */
+.sfx-badge {
+    background: #111417;
+    border: 1px solid rgba(197, 160, 89, 0.4);
+    color: #c5a059;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+.sfx-badge:hover {
+    background: #1c2126;
+    border-color: #f59e0b;
+}
+
+.sfx-led {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 6px #10b981;
+}
+
+.sfx-led.muted {
+    background: #ef4444;
+    box-shadow: 0 0 4px #ef4444;
+}
+
+/* --- TUSHAR-VISION EMBOSSED LOGO --- */
+.panel-brand {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-align: center;
+    padding-top: 6px;
+}
+
+/* ==============================================================
+   BOTTOM WOODEN CONSOLE SHELF & KEYBOARD SHORTCUTS BAR
+   ============================================================== */
+.bottom-console-shelf {
+    width: 100%;
+    max-width: 1020px;
+    height: 12px;
+    background: linear-gradient(180deg, #331f14 0%, #170d07 100%);
+    border-radius: 4px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    margin-top: 2px;
+}
+
+.bottom-channel-nav {
+    margin-top: 14px;
+    width: 100%;
+    max-width: 980px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.channel-nav-hint {
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    color: #bfa88c;
+    text-align: center;
+}
+
+.channel-buttons-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+}
+
+.ch-btn {
+    background: rgba(22, 18, 14, 0.85);
+    border: 1px solid rgba(197, 160, 89, 0.3);
+    color: #d8c8b4;
+    font-family: var(--font-crt);
+    font-size: 13px;
+    letter-spacing: 1px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+}
+
+.ch-btn:hover {
+    background: rgba(50, 40, 30, 0.95);
+    border-color: #f59e0b;
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.ch-btn.active {
+    background: rgba(197, 160, 89, 0.25);
+    border-color: #f59e0b;
+    color: #fbbf24;
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.35);
+}
+
+/* ==============================================================
+   RESPONSIVENESS (MOBILE / TABLET TV ADAPTATION)
+   ============================================================== */
+@media (max-width: 860px) {
+    .tv-cabinet {
+        grid-template-columns: 1fr;
+        padding: 16px;
+        min-height: auto;
+    }
+
+    .tv-bezel {
+        min-height: 440px;
+    }
+
+    .control-panel {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        gap: 12px;
+        padding: 12px;
+    }
+
+    .rotary-knob-container {
+        width: 60px;
+        height: 60px;
+    }
+    .knob-bezel { width: 60px; height: 60px; }
+    .knob-wheel { width: 50px; height: 50px; }
+
+    .speaker-louvers {
+        display: none; /* Hide louvers on compact mobile */
+    }
+}

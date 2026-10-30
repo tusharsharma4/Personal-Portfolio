@@ -1,0 +1,24 @@
+{
+  "name": "tushar-vision-retro-tv-portfolio",
+  "version": "1.0.0",
+  "description": "Authentic 1980s/90s Cathode Ray Tube (CRT) Television personal portfolio with procedural Web Audio API sound, live CRO oscilloscope lab, and playable retro arcade games.",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve . -p 8080",
+    "dev": "npx serve . -p 8080",
+    "preview": "npx serve ."
+  },
+  "keywords": [
+    "portfolio",
+    "retro",
+    "crt-tv",
+    "vintage-tv",
+    "hardware-engineer",
+    "ece",
+    "embedded-systems",
+    "oscilloscope",
+    "web-audio-api"
+  ],
+  "author": "Tushar Sharma <tusharsharmabs05@gmail.com>",
+  "license": "MIT"
+}

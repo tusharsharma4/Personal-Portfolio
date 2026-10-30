@@ -1,0 +1,332 @@
+/* ==============================================================
+   CATHODE RAY TUBE (CRT) SCREEN SHADER & EFFECTS
+   Authentic 90's CRT glass curvature, scanlines, phosphor glow,
+   electron-beam turn-on, collapse turn-off (Image 5), and OSD.
+   ============================================================== */
+
+.crt-monitor {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 480px;
+    border-radius: 18px;
+    background-color: var(--tube-bg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 
+        inset 0 0 80px rgba(0, 0, 0, 0.95),
+        inset 0 0 120px rgba(0, 0, 0, 0.8),
+        0 0 20px rgba(0, 0, 0, 0.9);
+}
+
+/* --- CRT GLASS CURVATURE & VIGNETTE OVERLAY --- */
+.crt-glass-reflection {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 40;
+    border-radius: 18px;
+    background: 
+        radial-gradient(circle at 45% 35%, rgba(255, 255, 255, 0.05) 0%, transparent 60%),
+        radial-gradient(ellipse at 50% 50%, transparent 65%, rgba(0, 0, 0, 0.75) 100%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 35%);
+    box-shadow: inset 0 0 35px rgba(0, 0, 0, 0.9);
+}
+
+/* --- HORIZONTAL PHOSPHOR SCANLINES --- */
+.crt-scanlines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 38;
+    background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%, 
+        rgba(0, 0, 0, 0.45) 50%
+    );
+    background-size: 100% 4px;
+    opacity: 0.85;
+}
+
+/* Subtle phosphor flicker */
+.crt-scanlines::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: rgba(18, 16, 16, 0.03);
+    opacity: 0;
+    z-index: 39;
+    pointer-events: none;
+    animation: crtFlicker 0.15s infinite;
+}
+
+@keyframes crtFlicker {
+    0% { opacity: 0.12; }
+    50% { opacity: 0.04; }
+    100% { opacity: 0.15; }
+}
+
+/* --- CRT SHADOW MASK / RGB APERTURE GRILLE --- */
+.crt-aperture-grille {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 37;
+    background: repeating-linear-gradient(
+        90deg,
+        rgba(255, 0, 0, 0.04) 0px,
+        rgba(0, 255, 0, 0.04) 1px,
+        rgba(0, 0, 255, 0.04) 2px,
+        transparent 3px
+    );
+    opacity: 0.75;
+}
+
+/* --- SCREEN OFF STATE (Images 1 & 3) --- */
+.screen-off-display {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 50%, #0a0d10 0%, #040507 80%, #000000 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 30;
+    text-align: center;
+    padding: 24px;
+    cursor: pointer;
+    transition: opacity 0.25s ease;
+}
+
+.screen-off-display.hidden {
+    display: none;
+}
+
+.screen-off-title {
+    font-size: 18px;
+    letter-spacing: 4px;
+    color: rgba(255, 255, 255, 0.25);
+    margin-bottom: 12px;
+    font-weight: bold;
+    text-shadow: 0 0 2px rgba(255, 255, 255, 0.2);
+}
+
+.screen-off-prompt {
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.35);
+    animation: promptBlink 1.8s infinite ease-in-out;
+}
+
+.screen-off-subhint {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: rgba(255, 255, 255, 0.18);
+    margin-top: 14px;
+}
+
+@keyframes promptBlink {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 0.2; }
+}
+
+/* ==============================================================
+   ACTIVE SCREEN RASTER & CONTENT AREA
+   ============================================================== */
+.crt-screen-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 480px;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 16px 20px 20px;
+    color: var(--tube-phosphor);
+    text-shadow: 0 0 6px var(--tube-glow);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(245, 158, 11, 0.4) transparent;
+}
+
+/* Custom retro scrollbar */
+.crt-screen-content::-webkit-scrollbar {
+    width: 6px;
+}
+.crt-screen-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+.crt-screen-content::-webkit-scrollbar-thumb {
+    background: var(--tube-phosphor);
+    border-radius: 3px;
+    opacity: 0.5;
+}
+
+/* ==============================================================
+   ELECTRON BEAM TURN-ON / TURN-OFF ANIMATIONS (Image 5)
+   ============================================================== */
+.power-animating-on {
+    animation: crtTurnOn 0.55s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes crtTurnOn {
+    0% {
+        transform: scale(1, 0.002);
+        filter: brightness(25) contrast(3);
+        opacity: 1;
+    }
+    35% {
+        transform: scale(1, 0.005);
+        filter: brightness(15) contrast(2);
+        opacity: 1;
+    }
+    70% {
+        transform: scale(1, 1.05);
+        filter: brightness(2.5);
+    }
+    100% {
+        transform: scale(1, 1);
+        filter: brightness(1);
+        opacity: 1;
+    }
+}
+
+/* The iconic CRT horizontal collapse to center dot (Image 5) */
+.power-animating-off {
+    animation: crtTurnOff 0.55s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+    transform-origin: center center;
+}
+
+@keyframes crtTurnOff {
+    0% {
+        transform: scale(1, 1);
+        filter: brightness(1.2);
+        opacity: 1;
+    }
+    40% {
+        transform: scale(1, 0.004);
+        filter: brightness(25) contrast(3);
+        opacity: 1;
+        background: #ffffff;
+    }
+    70% {
+        transform: scale(0.008, 0.004);
+        filter: brightness(40);
+        opacity: 1;
+    }
+    90% {
+        transform: scale(0.003, 0.003);
+        filter: brightness(20);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(0.001, 0.001);
+        filter: brightness(0);
+        opacity: 0;
+    }
+}
+
+/* Static noise overlay when changing channel */
+.channel-static-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 35;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.08s ease;
+    background: repeating-radial-gradient(circle, #fff 0, #000 1px, #fff 2px);
+    background-size: 3px 3px;
+    mix-blend-mode: screen;
+}
+
+.channel-static-overlay.active {
+    opacity: 0.45;
+}
+
+/* ==============================================================
+   ON-SCREEN DISPLAY (OSD) - RETRO GREEN VCR BANNER
+   ============================================================== */
+.crt-osd {
+    position: absolute;
+    top: 14px;
+    right: 20px;
+    z-index: 36;
+    font-family: var(--font-crt);
+    font-size: 16px;
+    letter-spacing: 2px;
+    color: #22c55e;
+    text-shadow: 0 0 8px rgba(34, 197, 94, 0.8);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.crt-osd.show {
+    opacity: 1;
+}
+
+.osd-ch {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.osd-meta {
+    font-size: 11px;
+    color: rgba(34, 197, 94, 0.85);
+}
+
+/* ==============================================================
+   CRT PHOSPHOR THEMES
+   ============================================================== */
+/* Amber P3 (Default Warm Retro CRT - Images 3-5) */
+.tube-amber {
+    --tube-phosphor: #f59e0b;
+    --tube-glow: rgba(245, 158, 11, 0.4);
+    --tube-bg: #090c10;
+}
+
+/* Green P1 (Radar / Matrix Terminal) */
+.tube-green {
+    --tube-phosphor: #22c55e;
+    --tube-glow: rgba(34, 197, 94, 0.45);
+    --tube-bg: #050c07;
+}
+
+/* Color Trinitron (Full Retro Color - Image 2) */
+.tube-color {
+    --tube-phosphor: #f8fafc;
+    --tube-glow: rgba(255, 255, 255, 0.3);
+    --tube-bg: #080a0e;
+}
+
+/* Black & White Monochrome */
+.tube-bw {
+    --tube-phosphor: #cbd5e1;
+    --tube-glow: rgba(203, 213, 225, 0.35);
+    --tube-bg: #050608;
+}
+
+/* Cyberpunk Cyan */
+.tube-cyan {
+    --tube-phosphor: #06b6d4;
+    --tube-glow: rgba(6, 182, 212, 0.45);
+    --tube-bg: #040a10;
+}
