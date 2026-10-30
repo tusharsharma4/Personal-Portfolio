@@ -39,7 +39,7 @@
             --amb: #ffdc73;
             --bg: #0c0b0a;
             --f: 'VT323', monospace;
-            --tv-max-w: 1060px;
+            --tv-max-w: min(1040px, 90vw, calc((100vh - 128px) * 1.5686));
         }
 
         body.theme-green {
@@ -92,7 +92,7 @@
             font-family: 'VT323', monospace;
             color: #d7c7ad;
             overflow-x: hidden;
-            padding: 16px;
+            padding: clamp(14px, 2.5vh, 28px) clamp(16px, 2.5vw, 32px);
             position: relative;
         }
 
@@ -111,17 +111,17 @@
             position: relative;
             z-index: 10;
             width: 100%;
-            max-width: var(--tv-max-w, 1060px);
+            max-width: var(--tv-max-w);
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 14px;
+            margin-top: 0;
             transition: max-width 0.3s ease;
         }
 
         .quick-remote-bar {
             width: 100%;
-            max-width: var(--tv-max-w, 1060px);
+            max-width: var(--tv-max-w);
             transition: max-width 0.3s ease;
         }
 
@@ -131,12 +131,12 @@
         .tv-chassis {
             width: 100%;
             aspect-ratio: 16 / 10.2;
-            min-height: 510px;
+            min-height: 0;
             border-radius: 34px;
-            padding: 24px 26px;
+            padding: clamp(16px, 1.8vw, 24px) clamp(18px, 2vw, 26px);
             position: relative;
             display: flex;
-            gap: 22px;
+            gap: clamp(14px, 1.6vw, 22px);
             border: 1px solid #4a3e2e;
             box-shadow:
                 0 32px 65px rgba(0, 0, 0, 0.88),
@@ -148,18 +148,134 @@
             transition: background 0.4s ease, border-color 0.4s ease;
         }
 
-        /* Chassis Style 1: 1989 Lab Beige Casing (File 1 & Images 3-5) */
-        .tv-chassis.casing-beige {
-            background: linear-gradient(160deg, #cbb894 0%, #b5a07c 38%, #988564 78%, #7d6c4f 100%);
-        }
+        /* =========================================================
+           TV CASING FINISH THEMES (ALL 9 VINTAGE AUTHENTIC STYLES)
+        ========================================================= */
 
-        /* Chassis Style 2: Walnut Woodgrain Cabinet (File 2 & Images 1-2) */
-        .tv-chassis.casing-wood {
+        /* 01. CLASSIC WOOD (ORIGINAL) */
+        .tv-chassis.casing-wood,
+        .tv-chassis.casing-classic-wood {
             background:
                 repeating-linear-gradient(88deg, rgba(0, 0, 0, 0) 0 5px, rgba(0, 0, 0, 0.12) 5px 6px, rgba(0, 0, 0, 0) 6px 13px),
                 repeating-linear-gradient(92deg, rgba(255, 255, 255, 0.06) 0 2px, rgba(0, 0, 0, 0) 2px 9px),
-                linear-gradient(160deg, #8a5a30 0%, #5b3718 60%, #3d230e 100%);
-            border-color: #2b180a;
+                linear-gradient(160deg, #9b6532 0%, #75441d 45%, #4f2b10 80%, #301706 100%);
+            border-color: #2b1406;
+            box-shadow:
+                0 30px 65px rgba(0, 0, 0, 0.95),
+                inset 0 10px 22px rgba(255, 215, 160, 0.2),
+                inset 0 -10px 20px rgba(25, 12, 4, 0.9),
+                inset 4px 0 10px rgba(255, 220, 170, 0.15),
+                inset -4px 0 12px rgba(20, 10, 3, 0.8);
+        }
+
+        /* 02. VINTAGE METAL BLACK */
+        .tv-chassis.casing-metal-black {
+            background:
+                repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.015) 0px, rgba(255, 255, 255, 0.015) 1px, transparent 1px, transparent 6px),
+                linear-gradient(160deg, #2d2d31 0%, #1e1e21 35%, #151517 75%, #0b0b0d 100%);
+            border-color: #101012;
+            box-shadow:
+                0 30px 65px rgba(0, 0, 0, 0.95),
+                inset 0 2px 2px rgba(255, 255, 255, 0.28),
+                inset 0 10px 22px rgba(255, 255, 255, 0.06),
+                inset 0 -10px 20px rgba(0, 0, 0, 0.95),
+                inset 4px 0 10px rgba(255, 255, 255, 0.05),
+                inset -4px 0 12px rgba(0, 0, 0, 0.9);
+        }
+
+        /* 03. RETRO CREAM (1989 LAB BEIGE) */
+        .tv-chassis.casing-beige,
+        .tv-chassis.casing-retro-cream {
+            background: linear-gradient(160deg, #d8c8a1 0%, #bfae87 38%, #a08f6b 78%, #7e6f4d 100%);
+            border-color: #554832;
+            box-shadow:
+                0 30px 65px rgba(0, 0, 0, 0.95),
+                inset 0 10px 22px rgba(255, 255, 235, 0.35),
+                inset 0 -8px 16px rgba(45, 36, 24, 0.75),
+                inset 4px 0 10px rgba(255, 244, 214, 0.25),
+                inset -4px 0 12px rgba(40, 31, 20, 0.6);
+        }
+
+        /* 04. RETRO RED */
+        .tv-chassis.casing-retro-red {
+            background: linear-gradient(160deg, #d12a2a 0%, #a81717 38%, #7c0e0e 75%, #520606 100%);
+            border-color: #3b0404;
+            box-shadow:
+                0 30px 65px rgba(0, 0, 0, 0.95),
+                inset 0 3px 6px rgba(255, 175, 175, 0.45),
+                inset 0 10px 22px rgba(255, 130, 130, 0.25),
+                inset 0 -10px 20px rgba(35, 4, 4, 0.92),
+                inset 4px 0 10px rgba(255, 160, 160, 0.2),
+                inset -4px 0 12px rgba(30, 3, 3, 0.85);
+        }
+
+        /* 05. VINTAGE GREEN GOLD (WITH POLISHED BRASS TRIM) */
+        .tv-chassis.casing-green-gold {
+            background: linear-gradient(160deg, #1f4532 0%, #153526 40%, #0d251a 75%, #06160e 100%);
+            border-color: #8c6f2a;
+            box-shadow:
+                0 30px 65px rgba(0, 0, 0, 0.95),
+                inset 0 0 0 2px #d4af37,
+                inset 0 0 0 4px #0c2117,
+                inset 0 10px 22px rgba(212, 175, 55, 0.3),
+                inset 0 -10px 20px rgba(4, 16, 10, 0.9),
+                inset 4px 0 10px rgba(212, 175, 55, 0.2),
+                inset -4px 0 12px rgba(3, 12, 8, 0.85);
+        }
+
+        /* 06. PASTEL BLUE */
+        .tv-chassis.casing-pastel-blue {
+            background: linear-gradient(160deg, #5ea5bb 0%, #44879b 38%, #2e6677 75%, #1b4b5a 100%);
+            border-color: #183e4c;
+            box-shadow:
+                0 30px 65px rgba(0, 0, 0, 0.95),
+                inset 0 3px 5px rgba(225, 248, 255, 0.45),
+                inset 0 10px 22px rgba(200, 240, 255, 0.25),
+                inset 0 -10px 20px rgba(12, 36, 46, 0.9),
+                inset 4px 0 10px rgba(210, 245, 255, 0.2),
+                inset -4px 0 12px rgba(10, 30, 38, 0.8);
+        }
+
+        /* 07. MUSTARD YELLOW */
+        .tv-chassis.casing-mustard-yellow {
+            background: linear-gradient(160deg, #e8a71f 0%, #c78913 38%, #9e6909 75%, #704703 100%);
+            border-color: #553402;
+            box-shadow:
+                0 30px 65px rgba(0, 0, 0, 0.95),
+                inset 0 3px 5px rgba(255, 242, 185, 0.45),
+                inset 0 10px 22px rgba(255, 230, 140, 0.3),
+                inset 0 -10px 20px rgba(50, 30, 3, 0.9),
+                inset 4px 0 10px rgba(255, 235, 160, 0.2),
+                inset -4px 0 12px rgba(40, 24, 2, 0.8);
+        }
+
+        /* 08. DARK WALNUT */
+        .tv-chassis.casing-dark-walnut {
+            background:
+                repeating-linear-gradient(88deg, rgba(0, 0, 0, 0) 0 4px, rgba(0, 0, 0, 0.2) 4px 5px, rgba(0, 0, 0, 0) 5px 11px),
+                linear-gradient(160deg, #4f2b15 0%, #30170a 45%, #1d0c05 80%, #0e0502 100%);
+            border-color: #170903;
+            box-shadow:
+                0 30px 65px rgba(0, 0, 0, 0.95),
+                inset 0 10px 22px rgba(255, 205, 145, 0.15),
+                inset 0 -10px 20px rgba(10, 4, 1, 0.95),
+                inset 4px 0 10px rgba(255, 205, 145, 0.1),
+                inset -4px 0 12px rgba(8, 3, 1, 0.9);
+        }
+
+        /* 09. MATTE GREY */
+        .tv-chassis.casing-matte-grey {
+            background:
+                repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.015) 0 2px, transparent 2px 8px),
+                linear-gradient(160deg, #878e95 0%, #696f75 38%, #4a4e53 75%, #313539 100%);
+            border-color: #26292c;
+            box-shadow:
+                0 30px 65px rgba(0, 0, 0, 0.95),
+                inset 0 2px 3px rgba(255, 255, 255, 0.35),
+                inset 0 10px 22px rgba(255, 255, 255, 0.12),
+                inset 0 -10px 20px rgba(18, 20, 22, 0.9),
+                inset 4px 0 10px rgba(255, 255, 255, 0.1),
+                inset -4px 0 12px rgba(14, 16, 18, 0.8);
         }
 
         .tv-chassis::after {
@@ -200,7 +316,48 @@
             border-radius: 4px;
             box-shadow: 0 14px 24px rgba(0, 0, 0, 0.85), inset 0 1px 2px rgba(255, 255, 255, 0.25);
             margin-top: 2px;
-            transition: width 0.3s ease;
+            transition: width 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .shelf.shelf-metal-black {
+            background: linear-gradient(180deg, #2b2c30 0%, #131416 100%);
+            box-shadow: 0 14px 24px rgba(0, 0, 0, 0.98), inset 0 1px 2px rgba(255, 255, 255, 0.2);
+        }
+
+        .shelf.shelf-retro-cream {
+            background: linear-gradient(180deg, #6c4623 0%, #381f0b 100%);
+        }
+
+        .shelf.shelf-classic-wood {
+            background: linear-gradient(180deg, #7c4b22 0%, #3e220d 100%);
+        }
+
+        .shelf.shelf-retro-red {
+            background: linear-gradient(180deg, #3d0d0d 0%, #1a0404 100%);
+            box-shadow: 0 14px 24px rgba(0, 0, 0, 0.95), inset 0 1px 2px rgba(255, 120, 120, 0.25);
+        }
+
+        .shelf.shelf-green-gold {
+            background: linear-gradient(180deg, #1b261d 0%, #0c140d 100%);
+            box-shadow: 0 14px 24px rgba(0, 0, 0, 0.95), inset 0 1px 2px #d4af37;
+        }
+
+        .shelf.shelf-pastel-blue {
+            background: linear-gradient(180deg, #1c3640 0%, #0c1a20 100%);
+            box-shadow: 0 14px 24px rgba(0, 0, 0, 0.95), inset 0 1px 2px rgba(180, 230, 255, 0.25);
+        }
+
+        .shelf.shelf-mustard-yellow {
+            background: linear-gradient(180deg, #5c3c10 0%, #291904 100%);
+        }
+
+        .shelf.shelf-dark-walnut {
+            background: linear-gradient(180deg, #2e1709 0%, #120703 100%);
+        }
+
+        .shelf.shelf-matte-grey {
+            background: linear-gradient(180deg, #4d5156 0%, #25282a 100%);
+            box-shadow: 0 14px 24px rgba(0, 0, 0, 0.95), inset 0 1px 2px rgba(255, 255, 255, 0.3);
         }
 
         /* ==========================================
@@ -211,7 +368,7 @@
             height: 100%;
             background: #12100e;
             border-radius: 26px;
-            padding: 18px;
+            padding: clamp(12px, 1.3vw, 16px);
             position: relative;
             box-shadow:
                 inset 0 10px 24px rgba(0, 0, 0, 0.95),
@@ -521,7 +678,7 @@
             position: absolute;
             inset: 0;
             z-index: 20;
-            padding: 20px 24px;
+            padding: clamp(12px, 1.4vw, 18px) clamp(14px, 1.6vw, 22px);
             display: flex;
             flex-direction: column;
             color: var(--phosphor-main);
@@ -545,19 +702,21 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 2px dashed var(--phosphor-dim);
-            padding-bottom: 8px;
-            margin-bottom: 12px;
-            font-size: 1.25rem;
+            padding-bottom: 3px;
+            margin-bottom: 5px;
+            font-size: clamp(1.02rem, 1.1vw, 1.12rem);
             letter-spacing: 1px;
             flex-shrink: 0;
+            font-weight: bold;
         }
 
         .osd-badge {
             background: rgba(0, 0, 0, 0.65);
             border: 1px solid var(--phosphor-main);
-            padding: 1px 10px;
+            padding: 1px 7px;
             border-radius: 4px;
             font-weight: bold;
+            font-size: 1.05rem;
             box-shadow: 0 0 10px var(--phosphor-dim);
         }
 
@@ -566,7 +725,7 @@
             top: 6%;
             right: 8%;
             z-index: 38;
-            font-size: clamp(22px, 4vw, 36px);
+            font-size: clamp(20px, 3.5vw, 30px);
             color: #4dff6a;
             text-shadow: 0 0 8px #0f0, 2px 2px #000;
             opacity: 0;
@@ -582,8 +741,10 @@
         .channel-viewport {
             flex: 1;
             overflow-y: auto;
-            padding-right: 8px;
+            padding-right: 6px;
             position: relative;
+            font-size: clamp(0.98rem, 1.08vw, 1.08rem);
+            line-height: 1.28;
         }
 
         .channel-viewport::-webkit-scrollbar {
@@ -607,12 +768,12 @@
         /* CRT Footer inside screen */
         .crt-footer-bar {
             border-top: 1px solid var(--phosphor-dim);
-            padding-top: 8px;
-            margin-top: 10px;
+            padding-top: 6px;
+            margin-top: 8px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 1.05rem;
+            font-size: 1.25rem;
             flex-shrink: 0;
             flex-wrap: wrap;
             gap: 8px;
@@ -724,9 +885,51 @@
             text-transform: uppercase;
         }
 
-        .casing-wood .panel-label {
-            color: #d8c49e;
+        .casing-wood .panel-label,
+        .casing-classic-wood .panel-label {
+            color: #edd6b4;
             text-shadow: 0 1px 2px #000;
+        }
+
+        .casing-metal-black .panel-label {
+            color: #d0d4d8;
+            text-shadow: 0 1px 2px #000;
+        }
+
+        .casing-beige .panel-label,
+        .casing-retro-cream .panel-label {
+            color: #3a3022;
+            text-shadow: 0 1px 0 rgba(255, 245, 222, 0.45);
+        }
+
+        .casing-retro-red .panel-label {
+            color: #ffffff;
+            text-shadow: 0 1px 2px #380505;
+        }
+
+        .casing-green-gold .panel-label {
+            color: #ffd700;
+            text-shadow: 0 1px 2px #05140d, 0 0 6px rgba(212, 175, 55, 0.4);
+        }
+
+        .casing-pastel-blue .panel-label {
+            color: #f2faff;
+            text-shadow: 0 1px 2px #0d222a;
+        }
+
+        .casing-mustard-yellow .panel-label {
+            color: #3b2207;
+            text-shadow: 0 1px 0 rgba(255, 240, 190, 0.45);
+        }
+
+        .casing-dark-walnut .panel-label {
+            color: #e2cc9f;
+            text-shadow: 0 1px 2px #000;
+        }
+
+        .casing-matte-grey .panel-label {
+            color: #f5f6f8;
+            text-shadow: 0 1px 2px #181a1c;
         }
 
         /* 2. Brushed Metal Rotary Knob */
@@ -803,10 +1006,10 @@
                 inset 0 -1px 2px rgba(0, 0, 0, 0.8);
             color: #dfd0b8;
             font-family: 'Share Tech Mono', monospace;
-            font-size: 10px;
+            font-size: 11.5px;
             font-weight: 700;
-            letter-spacing: 0.8px;
-            padding: 4px 6px;
+            letter-spacing: 0.9px;
+            padding: 5px 6px;
             border-radius: 5px;
             cursor: pointer;
             display: flex;
@@ -830,16 +1033,53 @@
             opacity: 0.85;
         }
 
-        .casing-wood .panel-toggle-btn {
-            background: linear-gradient(180deg, #2e1d11 0%, #170e08 100%);
-            border-color: #58371f;
+        .casing-wood .panel-toggle-btn,
+        .casing-classic-wood .panel-toggle-btn {
+            background: linear-gradient(180deg, #332014 0%, #1a0f08 100%);
+            border-color: #633f24;
             color: #eedcc0;
         }
 
-        .casing-wood .panel-toggle-btn.btn-off {
-            background: linear-gradient(180deg, #1f1208 0%, #120904 100%);
-            border-color: #3b200e;
-            color: #856a4e;
+        .casing-metal-black .panel-toggle-btn {
+            background: linear-gradient(180deg, #242528 0%, #131416 100%);
+            border-color: #3a3b40;
+            color: #d6d9dc;
+        }
+
+        .casing-retro-red .panel-toggle-btn {
+            background: linear-gradient(180deg, #4d0b0b 0%, #260505 100%);
+            border-color: #8c1a1a;
+            color: #ffdede;
+        }
+
+        .casing-green-gold .panel-toggle-btn {
+            background: linear-gradient(180deg, #132e20 0%, #091a11 100%);
+            border-color: #8c6f2a;
+            color: #ffd700;
+        }
+
+        .casing-pastel-blue .panel-toggle-btn {
+            background: linear-gradient(180deg, #1b3d49 0%, #0d222a 100%);
+            border-color: #3b7486;
+            color: #e6f6fc;
+        }
+
+        .casing-mustard-yellow .panel-toggle-btn {
+            background: linear-gradient(180deg, #4f3408 0%, #281a04 100%);
+            border-color: #8a5c12;
+            color: #ffe6aa;
+        }
+
+        .casing-dark-walnut .panel-toggle-btn {
+            background: linear-gradient(180deg, #241309 0%, #110804 100%);
+            border-color: #4a2814;
+            color: #e6d3b3;
+        }
+
+        .casing-matte-grey .panel-toggle-btn {
+            background: linear-gradient(180deg, #303337 0%, #1c1e20 100%);
+            border-color: #50555b;
+            color: #f0f2f4;
         }
 
         .panel-toggle-btn:hover {
@@ -869,6 +1109,56 @@
             border: 1px solid #3c3224;
             position: relative;
             overflow: hidden;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+
+        .casing-wood .speaker-grille,
+        .casing-classic-wood .speaker-grille {
+            background: repeating-linear-gradient(90deg, #1f1208 0px, #1f1208 5px, #52341d 5px, #6b4324 9px, #301c0d 9px, #1f1208 11px);
+            border-color: #381f0e;
+        }
+
+        .casing-metal-black .speaker-grille {
+            background: repeating-linear-gradient(90deg, #0d0e10 0px, #0d0e10 5px, #2b2d32 5px, #383a40 9px, #1a1b1d 9px, #0d0e10 11px);
+            border-color: #17181a;
+        }
+
+        .casing-retro-red .speaker-grille {
+            background: repeating-linear-gradient(90deg, #2b0606 0px, #2b0606 5px, #661414 5px, #7d1c1c 9px, #3d0a0a 9px, #2b0606 11px);
+            border-color: #3d0a0a;
+        }
+
+        .casing-green-gold .speaker-grille {
+            background: repeating-linear-gradient(90deg, #091710 0px, #091710 5px, #265038 5px, #376e4f 9px, #153323 9px, #091710 11px);
+            border-color: #8c6f2a;
+        }
+
+        .casing-green-gold .screen-bezel {
+            box-shadow:
+                inset 0 10px 24px rgba(0, 0, 0, 0.95),
+                inset 0 -4px 10px rgba(212, 175, 55, 0.15),
+                0 0 0 2px #8c6f2a,
+                0 2px 4px rgba(212, 175, 55, 0.35);
+        }
+
+        .casing-pastel-blue .speaker-grille {
+            background: repeating-linear-gradient(90deg, #102630 0px, #102630 5px, #2c5c6e 5px, #39748b 9px, #1b3d4a 9px, #102630 11px);
+            border-color: #173845;
+        }
+
+        .casing-mustard-yellow .speaker-grille {
+            background: repeating-linear-gradient(90deg, #2e1c04 0px, #2e1c04 5px, #7a5011 5px, #966419 9px, #422908 9px, #2e1c04 11px);
+            border-color: #573708;
+        }
+
+        .casing-dark-walnut .speaker-grille {
+            background: repeating-linear-gradient(90deg, #120803 0px, #120803 5px, #361a0b 5px, #4a2510 9px, #210e05 9px, #120803 11px);
+            border-color: #210e05;
+        }
+
+        .casing-matte-grey .speaker-grille {
+            background: repeating-linear-gradient(90deg, #1d2023 0px, #1d2023 5px, #43484f 5px, #535962 9px, #292d32 9px, #1d2023 11px);
+            border-color: #26292d;
         }
 
         /* 5. Sound Toggle Badge */
@@ -888,6 +1178,31 @@
             gap: 6px;
             font-weight: bold;
             transition: all 0.15s ease;
+        }
+
+        .casing-green-gold .sound-badge-btn {
+            border-color: rgba(212, 175, 55, 0.6);
+            color: #ffd700;
+        }
+
+        .casing-retro-red .sound-badge-btn {
+            border-color: rgba(255, 120, 120, 0.6);
+            color: #ffdede;
+        }
+
+        .casing-metal-black .sound-badge-btn {
+            border-color: #55575c;
+            color: #d0d4d8;
+        }
+
+        .casing-matte-grey .sound-badge-btn {
+            border-color: #6a6f75;
+            color: #f0f2f4;
+        }
+
+        .casing-pastel-blue .sound-badge-btn {
+            border-color: #4b8a9e;
+            color: #d5eff7;
         }
 
         .sound-badge-btn:hover {
@@ -923,9 +1238,51 @@
             margin-bottom: 2px;
         }
 
-        .casing-wood .brand-logo {
-            color: #d8c49e;
+        .casing-wood .brand-logo,
+        .casing-classic-wood .brand-logo {
+            color: #edd5b3;
             text-shadow: 0 1px 2px #000;
+        }
+
+        .casing-metal-black .brand-logo {
+            color: #d2d6da;
+            text-shadow: 0 1px 2px #000;
+        }
+
+        .casing-beige .brand-logo,
+        .casing-retro-cream .brand-logo {
+            color: #3c3224;
+            text-shadow: 0 1px 0 rgba(255, 245, 220, 0.45);
+        }
+
+        .casing-retro-red .brand-logo {
+            color: #ffffff;
+            text-shadow: 0 1px 2px #3b0505;
+        }
+
+        .casing-green-gold .brand-logo {
+            color: #ffd700;
+            text-shadow: 0 1px 2px #05140d, 0 0 8px rgba(212, 175, 55, 0.5);
+        }
+
+        .casing-pastel-blue .brand-logo {
+            color: #f2faff;
+            text-shadow: 0 1px 2px #102e3a;
+        }
+
+        .casing-mustard-yellow .brand-logo {
+            color: #3b2207;
+            text-shadow: 0 1px 0 rgba(255, 240, 190, 0.45);
+        }
+
+        .casing-dark-walnut .brand-logo {
+            color: #e2cc9f;
+            text-shadow: 0 1px 2px #000;
+        }
+
+        .casing-matte-grey .brand-logo {
+            color: #f5f6f8;
+            text-shadow: 0 1px 2px #181a1c;
         }
 
         /* ==========================================
@@ -964,26 +1321,29 @@
         .row {
             all: unset;
             display: flex;
-            gap: .6em;
+            gap: .55em;
             width: 100%;
             cursor: pointer;
-            margin: .14em 0;
-            padding: .15em .3em;
+            margin: .08em 0;
+            padding: .12em .38em;
             color: #fff;
             box-sizing: border-box;
             border-radius: 4px;
-            font-size: 1.25rem;
+            font-size: clamp(0.95rem, 1.05vw, 1.02rem);
+            font-weight: 600;
+            letter-spacing: 0.4px;
             transition: background 0.12s;
         }
 
         .row i {
             font-style: normal;
-            padding: 0 .4em;
+            padding: 0 .32em;
             color: #000;
-            min-width: 3.2em;
+            min-width: 2.7em;
             text-align: center;
             font-weight: bold;
             border-radius: 2px;
+            font-size: 0.92em;
         }
 
         .row:hover,
@@ -998,11 +1358,13 @@
             white-space: nowrap;
             background: #001fbb;
             color: #ffee00;
-            margin-top: .6em;
-            padding: 3px 0;
+            margin-top: .3em;
+            padding: 2.5px 0;
+            font-size: 0.92rem;
             text-shadow: none;
             font-weight: bold;
             border-radius: 3px;
+            letter-spacing: 0.6px;
         }
 
         .mq div {
@@ -1022,8 +1384,9 @@
             border: 1px solid var(--phosphor-dim);
             background: rgba(255, 255, 255, 0.02);
             border-radius: 6px;
-            padding: 12px 14px;
-            margin-bottom: 11px;
+            padding: 8px 12px;
+            margin-bottom: 7px;
+            font-size: 1.02rem;
             transition: border-color 0.2s, background 0.2s;
         }
 
@@ -1035,14 +1398,15 @@
         .crt-pill {
             display: inline-block;
             border: 1px solid var(--phosphor-main);
-            padding: 2px 9px;
+            padding: 2px 8px;
             border-radius: 4px;
-            font-size: 1.05rem;
-            margin: 3px 4px 3px 0;
+            font-size: 0.95rem;
+            margin: 2px 4px 2px 0;
             cursor: pointer;
             transition: all 0.12s;
             background: rgba(255, 255, 255, 0.02);
             color: var(--phosphor-main);
+            font-weight: 600;
         }
 
         .crt-pill:hover,
@@ -1058,9 +1422,11 @@
             all: unset;
             cursor: pointer;
             color: var(--amb);
-            font-size: 1.15rem;
+            font-size: 1.05rem;
+            font-weight: bold;
             display: inline-block;
-            margin-bottom: .6em;
+            margin-bottom: .3em;
+            letter-spacing: 0.7px;
             transition: all 0.12s;
         }
 
@@ -1078,8 +1444,9 @@
             width: 100%;
             box-sizing: border-box;
             border: 2px solid var(--phosphor-dim);
-            padding: .45em .75em;
-            margin: .5em 0;
+            padding: .38em .65em;
+            margin: .25em 0;
+            font-size: 1.02rem;
             color: var(--phosphor-main);
             border-radius: 6px;
             transition: all 0.15s;
@@ -1260,7 +1627,6 @@
             font-weight: bold;
             box-shadow: 0 0 10px rgba(184, 159, 118, 0.6);
         }
-
         /* Avatar styling */
         .profile-avatar-circle {
             width: 82px;
@@ -1320,52 +1686,52 @@
         /* 1. Ultra-Wide & 4K Displays (1600px+) */
         @media (min-width: 1600px) {
             :root {
-                --tv-max-w: 1340px;
+                --tv-max-w: min(1140px, 88vw, calc((100vh - 136px) * 1.5686));
             }
 
             .tv-chassis {
-                min-height: 640px;
-                padding: 30px 32px;
-                gap: 28px;
+                min-height: 0;
+                padding: clamp(20px, 1.8vw, 28px) clamp(22px, 2vw, 30px);
+                gap: clamp(16px, 1.6vw, 26px);
                 border-radius: 42px;
             }
 
             .screen-bezel {
                 border-radius: 32px;
-                padding: 24px;
+                padding: clamp(14px, 1.2vw, 20px);
             }
 
             .channel-viewport {
-                font-size: 1.18rem;
+                font-size: 1.14rem;
             }
 
             .control-panel {
-                width: 240px;
+                width: clamp(200px, 16vw, 230px);
             }
 
             .speaker-grille {
-                width: 200px;
-                height: 95px;
+                width: clamp(160px, 13vw, 190px);
+                height: clamp(52px, 4.5vw, 68px);
             }
 
             .panel-toggle-btn {
-                max-width: 200px;
-                font-size: 11.5px;
-                padding: 7px 10px;
+                max-width: clamp(160px, 13vw, 190px);
+                font-size: 12px;
+                padding: 6px 8px;
             }
 
             .rotary-outer {
-                width: 110px;
-                height: 110px;
+                width: clamp(86px, 7vw, 105px);
+                height: clamp(86px, 7vw, 105px);
             }
 
             .power-btn {
-                width: 58px;
-                height: 58px;
+                width: clamp(48px, 4vw, 56px);
+                height: clamp(48px, 4vw, 56px);
             }
 
             .shelf {
-                height: 22px;
+                height: 20px;
             }
 
             .remote-key {
@@ -1377,48 +1743,52 @@
         /* 2. Large Desktop & Laptops (1200px - 1599px) */
         @media (min-width: 1200px) and (max-width: 1599px) {
             :root {
-                --tv-max-w: 1180px;
+                --tv-max-w: min(1020px, 90vw, calc((100vh - 128px) * 1.5686));
             }
 
             .tv-chassis {
-                min-height: 565px;
-                padding: 26px 28px;
-                gap: 24px;
+                min-height: 0;
+                padding: clamp(16px, 1.6vw, 22px) clamp(18px, 1.8vw, 24px);
+                gap: clamp(14px, 1.4vw, 20px);
                 border-radius: 38px;
             }
 
             .screen-bezel {
                 border-radius: 28px;
-                padding: 20px;
+                padding: clamp(12px, 1.1vw, 16px);
+            }
+
+            .channel-viewport {
+                font-size: 1.08rem;
             }
 
             .control-panel {
-                width: 220px;
+                width: clamp(185px, 15vw, 215px);
             }
 
             .speaker-grille {
-                width: 184px;
-                height: 70px;
+                width: clamp(150px, 12.5vw, 180px);
+                height: clamp(46px, 4vw, 60px);
             }
 
             .panel-toggle-btn {
-                max-width: 184px;
-                font-size: 11px;
+                max-width: clamp(150px, 12.5vw, 180px);
+                font-size: 11.5px;
                 padding: 6px 8px;
             }
 
             .rotary-outer {
-                width: 96px;
-                height: 96px;
+                width: clamp(80px, 6.5vw, 96px);
+                height: clamp(80px, 6.5vw, 96px);
             }
 
             .power-btn {
-                width: 54px;
-                height: 54px;
+                width: clamp(46px, 3.8vw, 52px);
+                height: clamp(46px, 3.8vw, 52px);
             }
 
             .shelf {
-                height: 20px;
+                height: 18px;
             }
 
             .remote-key {
@@ -1430,33 +1800,47 @@
         /* 3. Tablets & Small Laptops (821px - 1199px) */
         @media (min-width: 821px) and (max-width: 1199px) {
             :root {
-                --tv-max-w: 1060px;
+                --tv-max-w: min(940px, 92vw, calc((100vh - 120px) * 1.5686));
             }
 
             .tv-chassis {
-                min-height: 480px;
-                padding: 20px 22px;
-                gap: 18px;
+                min-height: 0;
+                padding: clamp(14px, 1.4vw, 18px) clamp(16px, 1.6vw, 20px);
+                gap: clamp(12px, 1.2vw, 16px);
+            }
+
+            .screen-bezel {
+                border-radius: 24px;
+                padding: clamp(10px, 1vw, 14px);
+            }
+
+            .channel-viewport {
+                font-size: 1.02rem;
             }
 
             .control-panel {
-                width: 195px;
+                width: clamp(175px, 16vw, 195px);
             }
 
             .rotary-outer {
-                width: 86px;
-                height: 86px;
+                width: clamp(74px, 6vw, 86px);
+                height: clamp(74px, 6vw, 86px);
             }
 
             .speaker-grille {
-                width: 165px;
-                height: 72px;
+                width: clamp(140px, 13vw, 165px);
+                height: clamp(42px, 3.8vw, 54px);
             }
 
             .panel-toggle-btn {
-                max-width: 165px;
-                font-size: 10px;
+                max-width: clamp(140px, 13vw, 165px);
+                font-size: 11px;
                 padding: 5px 6px;
+            }
+
+            .power-btn {
+                width: clamp(42px, 3.6vw, 48px);
+                height: clamp(42px, 3.6vw, 48px);
             }
         }
 
@@ -1626,9 +2010,9 @@
             }
 
             .crt-top-bar {
-                font-size: 0.95rem;
-                padding-bottom: 4px;
-                margin-bottom: 8px;
+                font-size: 0.96rem;
+                padding-bottom: 3px;
+                margin-bottom: 4px;
             }
 
             #osd-channel-title {
@@ -1639,26 +2023,26 @@
             }
 
             .crt-footer-bar {
-                font-size: 0.82rem;
+                font-size: 0.86rem;
                 gap: 4px;
-                padding-top: 6px;
-                margin-top: 6px;
+                padding-top: 3px;
+                margin-top: 3px;
             }
 
             .crt-footer-bar button {
-                font-size: 0.82rem !important;
-                padding: 1px 6px !important;
+                font-size: 0.8rem !important;
+                padding: 1px 5px !important;
             }
 
             .channel-viewport {
-                font-size: 0.95rem;
+                font-size: 0.96rem;
                 padding-right: 4px;
                 -webkit-overflow-scrolling: touch;
             }
 
             .row {
-                font-size: 1rem;
-                padding: 0.12em 0.2em;
+                font-size: 0.96rem;
+                padding: 0.1em 0.22em;
             }
 
             .row i {
@@ -1720,7 +2104,7 @@
     <!-- MAIN 1980s VINTAGE TELEVISION -->
     <main class="tv-wrapper">
         <!-- TV Chassis -->
-        <div class="tv-chassis casing-beige" id="tv-chassis">
+        <div class="tv-chassis casing-retro-cream casing-beige" id="tv-chassis">
 
             <!-- LEFT: CRT BEZEL & SCREEN -->
             <div class="screen-bezel">
@@ -1767,10 +2151,10 @@
                         <div class="crt-top-bar">
                             <div class="flex items-center gap-3">
                                 <span class="osd-badge" id="osd-channel-code">CH 00</span>
-                                <span id="osd-channel-title" class="font-bold tracking-wider">TUSHAR-VISION OS //
+                                <span id="osd-channel-title" class="font-bold tracking-wider text-lg sm:text-xl">TUSHAR-VISION OS //
                                     MENU</span>
                             </div>
-                            <div class="flex items-center gap-4 text-base">
+                            <div class="flex items-center gap-4 text-base sm:text-lg font-bold">
                                 <span class="hidden sm:inline opacity-80">60Hz NTSC</span>
                                 <span id="osd-clock" class="opacity-90">04:10 PM</span>
                             </div>
@@ -1810,8 +2194,8 @@
                 <!-- Hardware Push Buttons (Casing Style & CRT Tube Phosphor) -->
                 <div class="panel-switches-group">
                     <button id="casing-btn" class="panel-toggle-btn" onclick="toggleCasingStyle()"
-                        title="Toggle Cabinet Casing (Lab Beige / Walnut Wood)">
-                        CASING: 1989 LAB BEIGE
+                        title="Cycle TV Casing Finish (All 9 Vintage Styles from Reference)">
+                        CASING: 03 RETRO CREAM
                     </button>
                     <button id="theme-btn" class="panel-toggle-btn" onclick="cyclePhosphorTheme()"
                         title="Cycle CRT Tube Phosphor (Mono, Amber, Green, Color)">
@@ -1848,12 +2232,12 @@
         </div>
 
         <!-- Wooden Shelf Underneath (File 2) -->
-        <div class="shelf"></div>
+        <div class="shelf shelf-retro-cream"></div>
     </main>
 
     <!-- Bottom Tips -->
     <div class="bottom-tip">
-        <span class="hidden sm:inline">Tip: press 0-7 on your keyboard to change channel.</span>
+        <span class="hidden sm:inline">Tip: press 0-7 to tune channels &bull; press 'T' to cycle TV casing finish.</span>
         <span class="sm:hidden">Tip: Swipe screen ◀ ▶ or tap remote keys below to tune.</span>
     </div>
 
@@ -2062,7 +2446,75 @@
         let currentChannel = 0;
         let soundEnabled = true;
         let audioCtx = null;
-        let currentChassis = 'beige'; // 'beige' or 'wood'
+        // Authentic 9 Vintage TV Casing Finishes (From User Reference Image)
+        const CASINGS = [
+            {
+                id: 'classic-wood',
+                cls: 'casing-classic-wood',
+                name: '01. CLASSIC WOOD (ORIGINAL)',
+                short: '01 CLASSIC WOOD',
+                shelfCls: 'shelf-classic-wood'
+            },
+            {
+                id: 'metal-black',
+                cls: 'casing-metal-black',
+                name: '02. VINTAGE METAL BLACK',
+                short: '02 METAL BLACK',
+                shelfCls: 'shelf-metal-black'
+            },
+            {
+                id: 'retro-cream',
+                cls: 'casing-retro-cream',
+                name: '03. RETRO CREAM',
+                short: '03 RETRO CREAM',
+                shelfCls: 'shelf-retro-cream'
+            },
+            {
+                id: 'retro-red',
+                cls: 'casing-retro-red',
+                name: '04. RETRO RED',
+                short: '04 RETRO RED',
+                shelfCls: 'shelf-retro-red'
+            },
+            {
+                id: 'green-gold',
+                cls: 'casing-green-gold',
+                name: '05. VINTAGE GREEN GOLD',
+                short: '05 GREEN GOLD',
+                shelfCls: 'shelf-green-gold'
+            },
+            {
+                id: 'pastel-blue',
+                cls: 'casing-pastel-blue',
+                name: '06. PASTEL BLUE',
+                short: '06 PASTEL BLUE',
+                shelfCls: 'shelf-pastel-blue'
+            },
+            {
+                id: 'mustard-yellow',
+                cls: 'casing-mustard-yellow',
+                name: '07. MUSTARD YELLOW',
+                short: '07 MUSTARD GOLD',
+                shelfCls: 'shelf-mustard-yellow'
+            },
+            {
+                id: 'dark-walnut',
+                cls: 'casing-dark-walnut',
+                name: '08. DARK WALNUT',
+                short: '08 DARK WALNUT',
+                shelfCls: 'shelf-dark-walnut'
+            },
+            {
+                id: 'matte-grey',
+                cls: 'casing-matte-grey',
+                name: '09. MATTE GREY',
+                short: '09 MATTE GREY',
+                shelfCls: 'shelf-matte-grey'
+            }
+        ];
+
+        let currentCasingIdx = 2; // Default: 03. RETRO CREAM
+        let currentChassis = 'retro-cream';
 
         // Animation handles & State
         let currentSubView = null;
@@ -2568,19 +3020,19 @@
         function getMenuHTML() {
             const today = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }).toUpperCase();
             return `
-                <div class="mb-3 p-3 border border-current rounded bg-black/40">
-                    <div class="flex justify-between items-center text-sm border-b border-current/30 pb-1 mb-2 font-mono">
-                        <span class="bg-white text-black px-1.5 font-bold">P100 TERMINAL</span>
-                        <span>${today}</span>
+                <div class="mb-1.5 p-2 sm:p-2.5 border border-current rounded bg-black/40">
+                    <div class="flex justify-between items-center text-xs sm:text-sm border-b border-current/30 pb-0.5 mb-1 font-mono">
+                        <span class="bg-white text-black px-1.5 py-0.5 font-bold tracking-wider text-xs">P100 TERMINAL</span>
+                        <span class="font-bold text-xs">${today}</span>
                     </div>
-                    <div class="text-2xl sm:text-3xl font-bold tracking-wider text-[#ffdc73]">${RESUME_DATA.name.toUpperCase()}</div>
-                    <div class="text-lg opacity-90">${RESUME_DATA.title}</div>
-                    <div class="text-base opacity-75 mt-0.5">
+                    <div class="text-xl sm:text-2xl font-bold tracking-wider text-[#ffdc73] leading-tight mb-0.5">${RESUME_DATA.name.toUpperCase()}</div>
+                    <div class="text-sm sm:text-base font-bold opacity-90">${RESUME_DATA.title}</div>
+                    <div class="text-xs sm:text-sm opacity-85 mt-0.5 leading-snug">
                         📍 Poornima College of Engineering, Jaipur • CGPA: 8.0/10.0 • Embedded / IoT
                     </div>
                 </div>
 
-                <div class="text-base uppercase tracking-widest opacity-80 mb-2">
+                <div class="text-xs sm:text-sm uppercase tracking-wider opacity-90 mb-1 font-bold">
                     SELECT BROADCAST CHANNEL (CLICK ROW OR PRESS 1-7):
                 </div>
 
@@ -2607,23 +3059,23 @@
             return `
                 <button class="bk" onclick="setChannel(0)">&lt; back to menu</button>
                 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
-                    <div class="md:col-span-2 crt-card flex items-start gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 mb-2">
+                    <div class="md:col-span-2 crt-card flex items-start gap-3">
                         <div class="profile-avatar-circle">
                             <img src="${RESUME_DATA.avatar}" alt="${RESUME_DATA.name}" onerror="this.style.display='none'">
                         </div>
                         <div>
-                            <div class="text-2xl font-bold">${RESUME_DATA.name}</div>
-                            <div class="text-base text-[#ffdc73]">${RESUME_DATA.title}</div>
-                            <p class="text-base leading-snug opacity-90 mt-1">
+                            <div class="text-lg sm:text-xl font-bold">${RESUME_DATA.name}</div>
+                            <div class="text-sm sm:text-base text-[#ffdc73] font-bold">${RESUME_DATA.title}</div>
+                            <p class="text-xs sm:text-sm leading-snug opacity-90 mt-1">
                                 Electronics & Communication undergraduate at Poornima College of Engineering, Jaipur (CGPA 8.0). Experienced in hardware-software co-design, embedded systems (STM32, ESP32, UART, KiCad), and scalable full-stack web applications (FastAPI, SQLite, HTML5 &amp; CSS3).
                             </p>
                         </div>
                     </div>
 
                     <!-- ASCII IC Chip Visual (File 1) -->
-                    <div class="crt-card flex flex-col justify-center items-center text-center font-mono text-xs leading-tight">
-                        <pre class="opacity-90">
+                    <div class="crt-card flex flex-col justify-center items-center text-center font-mono text-[10.5px] sm:text-xs leading-tight">
+                        <pre class="opacity-90 font-bold">
    ┌──────────────┐
   ─┤1  ●      16├─ VCC
   ─┤2  TUSHAR 15├─ CLK
@@ -2633,22 +3085,22 @@
   ─┤6  HTML/CSS 1├─ SCL
    └──────────────┘
                         </pre>
-                        <span class="text-sm mt-1 opacity-80">CHIP ID: PCE23EC030</span>
+                        <span class="text-xs mt-0.5 opacity-80 font-bold">CHIP ID: PCE23EC030</span>
                     </div>
                 </div>
 
-                <div class="text-xl font-bold mb-2 border-b border-current/30 pb-1">
+                <div class="text-base sm:text-lg font-bold mb-1.5 border-b border-current/30 pb-0.5">
                     📚 ACADEMIC CREDENTIALS &amp; RESUME
                 </div>
 
                 ${RESUME_DATA.education.map(ed => `
                     <div class="crt-card">
                         <div class="flex flex-wrap justify-between items-start gap-2">
-                            <div class="text-xl font-bold">${ed.institution}</div>
-                            <span class="px-2.5 py-0.5 border border-current rounded text-base">${ed.duration}</span>
+                            <div class="text-base sm:text-lg font-bold">${ed.institution}</div>
+                            <span class="px-2 py-0.5 border border-current rounded text-xs font-bold">${ed.duration}</span>
                         </div>
-                        <div class="text-lg opacity-95 mt-0.5">${ed.degree}</div>
-                        <div class="flex flex-wrap justify-between items-center mt-2 text-base opacity-85">
+                        <div class="text-xs sm:text-sm opacity-95 mt-0.5 font-medium">${ed.degree}</div>
+                        <div class="flex flex-wrap justify-between items-center mt-1 text-xs sm:text-sm opacity-90">
                             <span class="font-bold text-[#ffdc73]">★ ${ed.score}</span>
                             <span>${ed.highlights}</span>
                         </div>
@@ -2665,22 +3117,22 @@
                 <button class="bk" onclick="setChannel(0)">&lt; back to menu</button>
 
                 <!-- Interactive CRO Oscilloscope Waveform Monitor -->
-                <div class="crt-card mb-3 bg-black/60">
-                    <div class="flex flex-col mb-2 gap-1 border-b border-current/30 pb-1.5">
-                        <span class="text-lg font-bold tracking-wide">⚡ LIVE CRO SIGNAL INSPECTOR</span>
-                        <div id="osc-readout" class="text-base font-bold text-[#ffdc73]">
+                <div class="crt-card mb-2 bg-black/60">
+                    <div class="flex flex-col mb-1.5 gap-0.5 border-b border-current/30 pb-1">
+                        <span class="text-base sm:text-lg font-bold tracking-wider">⚡ LIVE CRO SIGNAL INSPECTOR</span>
+                        <div id="osc-readout" class="text-xs sm:text-sm font-bold text-[#ffdc73]">
                             PROBING: EMBEDDED C &bull; 12.0 MHz &bull; WAVE: [SINE ANALOG] &bull; Vpp: 3.2V
                         </div>
                     </div>
-                    <canvas id="osc-canvas" width="620" height="88" class="w-full h-[88px] bg-black/80 border border-current/40 rounded"></canvas>
-                    <div id="osc-skill-desc" class="text-base mt-1.5 opacity-90">
+                    <canvas id="osc-canvas" width="620" height="74" class="w-full h-[74px] bg-black/80 border border-current/40 rounded"></canvas>
+                    <div id="osc-skill-desc" class="text-xs sm:text-sm mt-1.5 opacity-95">
                         PROBE TARGET: Embedded C — Register-level firmware, ISR timers, UART/SPI/I2C drivers
                     </div>
                 </div>
 
-                <div class="space-y-3">
+                <div class="space-y-2">
                     <div class="crt-card">
-                        <div class="text-lg font-bold mb-1">1. EMBEDDED SYSTEMS &amp; HARDWARE <span class="text-xs opacity-75 font-normal">(Click skill to probe wave)</span></div>
+                        <div class="text-base font-bold mb-1.5">1. EMBEDDED SYSTEMS &amp; HARDWARE <span class="text-xs opacity-80 font-normal">(Click skill to probe wave)</span></div>
                         <div>
                             ${RESUME_DATA.skills.coreEce.map(s => `
                                 <span class="crt-pill cursor-pointer" onclick="modulateOsc('${s.name}', ${s.freq}, ${s.amp}, '${s.desc}')">
@@ -2691,7 +3143,7 @@
                     </div>
 
                     <div class="crt-card">
-                        <div class="text-lg font-bold mb-1">2. PROGRAMMING, BACKEND &amp; WEB <span class="text-xs opacity-75 font-normal">(Click skill to probe wave)</span></div>
+                        <div class="text-base font-bold mb-1.5">2. PROGRAMMING, BACKEND &amp; WEB <span class="text-xs opacity-80 font-normal">(Click skill to probe wave)</span></div>
                         <div>
                             ${RESUME_DATA.skills.programmingWeb.map(s => `
                                 <span class="crt-pill cursor-pointer" onclick="modulateOsc('${s.name}', ${s.freq}, ${s.amp}, '${s.desc}')">
@@ -2799,7 +3251,7 @@
         function getExperienceHTML() {
             return `
                 <button class="bk" onclick="setChannel(0)">&lt; back to menu</button>
-                <div class="text-xl font-bold mb-2">
+                <div class="text-base sm:text-lg font-bold mb-2">
                     💼 INDUSTRIAL WORK EXPERIENCE &amp; INTERNSHIP
                 </div>
 
@@ -2807,15 +3259,15 @@
                     <div class="crt-card">
                         <div class="flex flex-wrap justify-between items-start gap-2">
                             <div>
-                                <span class="px-2 py-0.5 border border-current rounded text-sm mr-2 font-bold">01</span>
-                                <span class="text-2xl font-bold">${exp.role}</span>
+                                <span class="px-2 py-0.5 border border-current rounded text-xs mr-1.5 font-bold">01</span>
+                                <span class="text-base sm:text-lg font-bold">${exp.role}</span>
                             </div>
-                            <span class="px-2.5 py-0.5 border border-current rounded text-base">${exp.duration}</span>
+                            <span class="px-2 py-0.5 border border-current rounded text-xs sm:text-sm font-bold">${exp.duration}</span>
                         </div>
-                        <div class="text-lg font-bold text-[#ffdc73] mt-1">
-                            🏢 ${exp.company} <span class="opacity-70 ml-2">[${exp.tag}]</span>
+                        <div class="text-sm sm:text-base font-bold text-[#ffdc73] mt-1">
+                            🏢 ${exp.company} <span class="opacity-85 ml-1.5 text-xs font-normal">[${exp.tag}]</span>
                         </div>
-                        <ul class="mt-2.5 space-y-1.5 text-lg leading-snug">
+                        <ul class="mt-2 space-y-1 text-xs sm:text-sm leading-snug">
                             ${exp.points.map(pt => `<li>▸ ${pt}</li>`).join('')}
                         </ul>
                     </div>
@@ -2831,17 +3283,17 @@
                 return `
                     <button class="bk" onclick="setChannel(0)">&lt; back to menu</button>
                     <div class="flex flex-wrap justify-between items-center mb-2">
-                        <span class="text-xl font-bold">🛠️ PROJECTS BROADCAST ARCHIVE</span>
-                        <span class="text-sm opacity-80">CLICK ANY PROJECT TO INSPECT SCHEMATICS:</span>
+                        <span class="text-base sm:text-lg font-bold">🛠️ PROJECTS BROADCAST ARCHIVE</span>
+                        <span class="text-xs sm:text-sm opacity-85">CLICK ANY PROJECT TO INSPECT SCHEMATICS:</span>
                     </div>
 
                     ${RESUME_DATA.projects.map((p, i) => `
                         <button class="pick" onclick="setChannel(4, ${i})">
                             <div class="flex justify-between items-center">
-                                <b>[PRJ-0${i + 1}] ${p.title}</b>
-                                <span class="text-xs px-2 py-0.5 border border-current rounded">${p.badge}</span>
+                                <b class="text-sm sm:text-base font-bold">[PRJ-0${i + 1}] ${p.title}</b>
+                                <span class="text-xs font-bold px-2 py-0.5 border border-current rounded">${p.badge}</span>
                             </div>
-                            <div class="text-base opacity-85 mt-0.5">${p.tech}</div>
+                            <div class="text-xs sm:text-sm opacity-90 mt-0.5">${p.tech}</div>
                         </button>
                     `).join('')}
                 `;
@@ -2851,16 +3303,16 @@
             return `
                 <button class="bk" onclick="setChannel(4)">&lt; back to all projects</button>
                 <div class="crt-card">
-                    <div class="flex flex-wrap justify-between items-center gap-2 border-b border-current/30 pb-2 mb-2">
-                        <div class="text-2xl font-bold">${p.title}</div>
-                        <span class="px-2.5 py-0.5 border border-current rounded text-sm">${p.badge}</span>
+                    <div class="flex flex-wrap justify-between items-center gap-2 border-b border-current/30 pb-1.5 mb-1.5">
+                        <div class="text-base sm:text-lg font-bold">${p.title}</div>
+                        <span class="px-2 py-0.5 border border-current rounded text-xs font-bold">${p.badge}</span>
                     </div>
-                    <div class="text-base font-bold text-[#ffdc73] mb-2">TECH STACK: ${p.tech}</div>
-                    <ul class="space-y-1.5 text-lg leading-snug">
+                    <div class="text-xs sm:text-sm font-bold text-[#ffdc73] mb-1.5">TECH STACK: ${p.tech}</div>
+                    <ul class="space-y-1 text-xs sm:text-sm leading-snug">
                         ${p.points.map(pt => `<li>• ${pt}</li>`).join('')}
                     </ul>
-                    <div class="mt-3 p-2.5 bg-black/60 border border-current/40 rounded font-mono text-sm overflow-x-auto">
-                        <span class="opacity-75">SIGNAL FLOW &amp; ARCHITECTURE:</span><br>
+                    <div class="mt-2 p-2 bg-black/60 border border-current/40 rounded font-mono text-xs overflow-x-auto">
+                        <span class="opacity-85 font-bold">SIGNAL FLOW &amp; ARCHITECTURE:</span><br>
                         <code>${p.asciiSchematic}</code>
                     </div>
                 </div>
@@ -2873,17 +3325,17 @@
         function getAchievementsHTML() {
             return `
                 <button class="bk" onclick="setChannel(0)">&lt; back to menu</button>
-                <div class="text-xl font-bold mb-2">
+                <div class="text-base sm:text-lg font-bold mb-1.5">
                     🏆 NATIONAL &amp; STATE EXHIBITION HONORS (VERIFIED LOGS)
                 </div>
-                <div class="space-y-2.5">
+                <div class="space-y-1.5">
                     ${RESUME_DATA.achievements.map(ach => `
-                        <div class="crt-card flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <div class="crt-card flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
                             <div>
-                                <div class="text-xl font-bold">${ach.rank} — ${ach.event}</div>
-                                <div class="text-lg opacity-90">📍 ${ach.organizer}</div>
+                                <div class="text-sm sm:text-base font-bold">${ach.rank} — ${ach.event}</div>
+                                <div class="text-xs sm:text-sm opacity-90 mt-0.5">📍 ${ach.organizer}</div>
                             </div>
-                            <span class="px-3 py-1 border border-current rounded text-base self-start sm:self-center shrink-0">
+                            <span class="px-2 py-0.5 border border-current rounded text-xs font-bold self-start sm:self-center shrink-0">
                                 ${ach.year}
                             </span>
                         </div>
@@ -2899,23 +3351,23 @@
             if (game === null) {
                 return `
                     <button class="bk" onclick="setChannel(0)">&lt; back to menu</button>
-                    <div class="text-xl font-bold mb-2">
+                    <div class="text-base sm:text-lg font-bold mb-2">
                         🎮 RETRO ARCADE LAB // CHOOSE A MINI-GAME:
                     </div>
 
                     <button class="pick" onclick="setChannel(6, 'snake')">
-                        <b>[ 1 ] 🐍 PHOSPHOR SNAKE</b><br>
-                        <span>Eat energy cells, scale your signal line. Keyboard [WASD/Arrows] &amp; Mobile Touch.</span>
+                        <b class="text-sm sm:text-base font-bold">[ 1 ] 🐍 PHOSPHOR SNAKE</b><br>
+                        <span class="text-xs sm:text-sm opacity-90 mt-0.5 block">Eat energy cells, scale your signal line. Keyboard [WASD/Arrows] &amp; Mobile Touch.</span>
                     </button>
 
                     <button class="pick" onclick="setChannel(6, 'invaders')">
-                        <b>[ 2 ] 👾 SPACE INVADERS '89 (CRT ALIEN DEFENDER)</b><br>
-                        <span>Defend the CRT tube from marching alien waves! Keyboard &amp; Mobile Touch Arcade Pad.</span>
+                        <b class="text-sm sm:text-base font-bold">[ 2 ] 👾 SPACE INVADERS '89 (CRT ALIEN DEFENDER)</b><br>
+                        <span class="text-xs sm:text-sm opacity-90 mt-0.5 block">Defend the CRT tube from marching alien waves! Keyboard &amp; Mobile Touch Arcade Pad.</span>
                     </button>
 
                     <button class="pick" onclick="setChannel(6, 'soccer')">
-                        <b>[ 3 ] ⚽ ROBO SOCCER '89 (ESP8266 PONG SIM)</b><br>
-                        <span>Steer your robot paddle vs Analog AI bot. Direct pitch touch &amp; mobile buttons.</span>
+                        <b class="text-sm sm:text-base font-bold">[ 3 ] ⚽ ROBO SOCCER '89 (ESP8266 PONG SIM)</b><br>
+                        <span class="text-xs sm:text-sm opacity-90 mt-0.5 block">Steer your robot paddle vs Analog AI bot. Direct pitch touch &amp; mobile buttons.</span>
                     </button>
                 `;
             }
@@ -2925,9 +3377,9 @@
                 return `
                     <button class="bk" onclick="setChannel(6)">&lt; back to arcade menu</button>
                     <div class="crt-card flex flex-col items-center py-2 px-1">
-                        <div class="flex justify-between w-full max-w-[280px] mb-1 font-mono">
-                            <span class="text-lg font-bold">🐍 PHOSPHOR SNAKE</span>
-                            <span id="snake-score" class="text-base font-bold text-[#ffdc73]">SCORE: 0</span>
+                        <div class="flex justify-between w-full max-w-[280px] mb-1.5 font-mono">
+                            <span class="text-base font-bold">🐍 PHOSPHOR SNAKE</span>
+                            <span id="snake-score" class="text-xs sm:text-sm font-bold text-[#ffdc73]">SCORE: 0</span>
                         </div>
                         <canvas id="snake-cv" width="240" height="240" class="border-2 border-current bg-black rounded touch-none shadow-md" style="width: 220px; max-width: 82vw; aspect-ratio: 1/1;"></canvas>
                         
@@ -2941,7 +3393,7 @@
                             </div>
                         </div>
 
-                        <p class="text-xs text-center opacity-85 mt-2 font-mono" id="snake-hint">
+                        <p class="text-xs text-center opacity-85 mt-1.5 font-mono" id="snake-hint">
                             🕹️ KEYBOARD: [W, A, S, D] / [Arrows] &bull; MOBILE: Swipe canvas or tap D-Pad
                         </p>
                     </div>
@@ -2953,22 +3405,22 @@
                 return `
                     <button class="bk" onclick="setChannel(6)">&lt; back to arcade menu</button>
                     <div class="crt-card flex flex-col items-center py-2 px-1">
-                        <div class="flex justify-between w-full max-w-[320px] mb-1 font-mono">
-                            <span class="text-lg font-bold">👾 SPACE INVADERS '89</span>
-                            <span id="invaders-score" class="text-base font-bold text-[#ffdc73]">SCORE: 000 | LIVES: 3</span>
+                        <div class="flex justify-between w-full max-w-[320px] mb-1.5 font-mono">
+                            <span class="text-base font-bold">👾 SPACE INVADERS '89</span>
+                            <span id="invaders-score" class="text-xs sm:text-sm font-bold text-[#ffdc73]">SCORE: 000 | LIVES: 3</span>
                         </div>
                         <canvas id="invaders-cv" width="340" height="240" class="border-2 border-current bg-black rounded touch-none shadow-md" style="width: 320px; max-width: 95vw; aspect-ratio: 17/12;"></canvas>
                         
                         <!-- Mobile Touch Controller Bar -->
                         <div class="flex items-center justify-between gap-2 w-full max-w-[320px] mt-2 px-1 select-none">
                             <div class="flex gap-2">
-                                <button class="arcade-btn px-4 py-2 text-base font-bold" id="inv-btn-l" aria-label="Move Left">◀ LEFT</button>
-                                <button class="arcade-btn px-4 py-2 text-base font-bold" id="inv-btn-r" aria-label="Move Right">RIGHT ▶</button>
+                                <button class="arcade-btn px-4 py-2 text-sm font-bold" id="inv-btn-l" aria-label="Move Left">◀ LEFT</button>
+                                <button class="arcade-btn px-4 py-2 text-sm font-bold" id="inv-btn-r" aria-label="Move Right">RIGHT ▶</button>
                             </div>
-                            <button class="arcade-btn arcade-fire-btn px-5 py-2 text-base font-bold" id="inv-btn-f" aria-label="Fire Laser">🔴 FIRE</button>
+                            <button class="arcade-btn arcade-fire-btn px-5 py-2 text-sm font-bold" id="inv-btn-f" aria-label="Fire Laser">🔴 FIRE</button>
                         </div>
 
-                        <p class="text-xs opacity-85 mt-2 font-mono text-center" id="invaders-hint">
+                        <p class="text-xs opacity-85 mt-1.5 font-mono text-center" id="invaders-hint">
                             🕹️ MOVE: [A, D] / [◀, ▶] | FIRE: [SPACE] / [W] &bull; MOBILE: Touch buttons or screen
                         </p>
                     </div>
@@ -2980,19 +3432,19 @@
                 return `
                     <button class="bk" onclick="setChannel(6)">&lt; back to arcade menu</button>
                     <div class="crt-card flex flex-col items-center py-2 px-1">
-                        <div class="flex justify-between w-full max-w-[320px] mb-1 font-mono">
-                            <span class="text-lg font-bold">⚽ ROBO SOCCER '89</span>
-                            <span id="soccer-score" class="text-base font-bold text-[#ffdc73]">TUSHAR: 0 | CPU: 0</span>
+                        <div class="flex justify-between w-full max-w-[320px] mb-1.5 font-mono">
+                            <span class="text-base font-bold">⚽ ROBO SOCCER '89</span>
+                            <span id="soccer-score" class="text-xs sm:text-sm font-bold text-[#ffdc73]">TUSHAR: 0 | CPU: 0</span>
                         </div>
                         <canvas id="soccer-canvas" width="340" height="180" class="w-full max-w-[320px] bg-black border-2 border-current cursor-crosshair rounded touch-none" style="aspect-ratio: 17/9;"></canvas>
 
                         <!-- Mobile Touch Paddle Steer Buttons -->
                         <div class="flex items-center justify-center gap-4 w-full max-w-[320px] mt-2 px-1 select-none">
-                            <button class="arcade-btn px-5 py-2 text-base font-bold" id="soccer-btn-u">▲ STEER UP</button>
-                            <button class="arcade-btn px-5 py-2 text-base font-bold" id="soccer-btn-d">▼ STEER DOWN</button>
+                            <button class="arcade-btn px-4 py-1.5 text-sm font-bold" id="soccer-btn-u">▲ STEER UP</button>
+                            <button class="arcade-btn px-4 py-1.5 text-sm font-bold" id="soccer-btn-d">▼ STEER DOWN</button>
                         </div>
 
-                        <p class="text-xs opacity-85 mt-2 font-mono text-center">
+                        <p class="text-xs opacity-85 mt-1.5 font-mono text-center">
                             Move mouse or touch inside pitch to steer Arduino+ESP8266 bot!
                         </p>
                     </div>
@@ -3641,26 +4093,26 @@
         function getContactHTML() {
             return `
                 <button class="bk" onclick="setChannel(0)">&lt; back to menu</button>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
                     
                     <!-- Direct Carrier Badges -->
                     <div class="crt-card">
-                        <div class="text-2xl font-bold mb-2 border-b border-current/30 pb-1">
+                        <div class="text-base sm:text-lg font-bold mb-1.5 border-b border-current/30 pb-0.5">
                             📡 DIRECT CARRIER LINKS
                         </div>
-                        <div class="space-y-2.5 text-lg">
+                        <div class="space-y-1.5 text-xs sm:text-sm">
                             <div><span class="opacity-75">NAME:</span> <strong>${RESUME_DATA.name}</strong></div>
                             
                             <div class="flex items-center justify-between gap-2 flex-wrap">
                                 <span><span class="opacity-75">EMAIL:</span> ${RESUME_DATA.email}</span>
-                                <button onclick="copyToClipboard('${RESUME_DATA.email}', this)" class="px-2 py-0.5 border border-current rounded text-sm cursor-pointer hover:bg-amber-400 hover:text-black">
+                                <button onclick="copyToClipboard('${RESUME_DATA.email}', this)" class="px-1.5 py-0.5 border border-current rounded text-xs font-bold cursor-pointer hover:bg-amber-400 hover:text-black">
                                     COPY EMAIL
                                 </button>
                             </div>
 
                             <div class="flex items-center justify-between gap-2 flex-wrap">
                                 <span><span class="opacity-75">PHONE:</span> ${RESUME_DATA.phone}</span>
-                                <button onclick="copyToClipboard('${RESUME_DATA.phoneRaw}', this)" class="px-2 py-0.5 border border-current rounded text-sm cursor-pointer hover:bg-amber-400 hover:text-black">
+                                <button onclick="copyToClipboard('${RESUME_DATA.phoneRaw}', this)" class="px-1.5 py-0.5 border border-current rounded text-xs font-bold cursor-pointer hover:bg-amber-400 hover:text-black">
                                     COPY NO.
                                 </button>
                             </div>
@@ -3675,7 +4127,7 @@
                                 <a href="${RESUME_DATA.linkedin}" target="_blank" rel="noopener noreferrer" class="underline hover:opacity-80">${RESUME_DATA.linkedinDisplay} ↗</a>
                             </div>
 
-                            <div class="mt-2 text-base opacity-80 border-t border-current/20 pt-2">
+                            <div class="mt-1.5 text-xs opacity-80 border-t border-current/20 pt-1.5">
                                 📍 LOCATION: Jaipur, Rajasthan (302001), India<br>
                                 📻 RF FREQUENCY: 145.500 MHz (Amateur 2m Band)
                             </div>
@@ -3685,31 +4137,31 @@
                     <!-- Interactive RF Transmission Form -->
                     <div class="crt-card flex flex-col justify-between">
                         <div>
-                            <div class="text-2xl font-bold mb-2 border-b border-current/30 pb-1">
+                            <div class="text-base sm:text-lg font-bold mb-1.5 border-b border-current/30 pb-0.5">
                                 ⚡ TRANSMIT BROADCAST PACKET
                             </div>
-                            <form onsubmit="handleSendPacket(event)" class="space-y-2 text-base">
+                            <form onsubmit="handleSendPacket(event)" class="space-y-1.5 text-xs sm:text-sm">
                                 <div>
-                                    <label class="block opacity-75">&gt; OPERATOR / YOUR NAME:</label>
-                                    <input type="text" id="tx-name" required onkeydown="playKeyClick()" class="w-full bg-black/60 border border-current px-2.5 py-1 rounded text-white font-mono focus:outline-none focus:ring-1 focus:ring-amber-400">
+                                    <label class="block font-bold opacity-85 mb-0.5">&gt; OPERATOR / YOUR NAME:</label>
+                                    <input type="text" id="tx-name" required onkeydown="playKeyClick()" class="w-full bg-black/60 border border-current px-2 py-0.5 rounded text-white font-mono text-xs sm:text-sm focus:outline-none focus:ring-1 focus:ring-amber-400">
                                 </div>
                                 <div>
-                                    <label class="block opacity-75">&gt; RETURN FREQUENCY / EMAIL:</label>
-                                    <input type="email" id="tx-email" required onkeydown="playKeyClick()" class="w-full bg-black/60 border border-current px-2.5 py-1 rounded text-white font-mono focus:outline-none focus:ring-1 focus:ring-amber-400">
+                                    <label class="block font-bold opacity-85 mb-0.5">&gt; RETURN FREQUENCY / EMAIL:</label>
+                                    <input type="email" id="tx-email" required onkeydown="playKeyClick()" class="w-full bg-black/60 border border-current px-2 py-0.5 rounded text-white font-mono text-xs sm:text-sm focus:outline-none focus:ring-1 focus:ring-amber-400">
                                 </div>
                                 <div>
-                                    <label class="block opacity-75">&gt; TRANSMISSION PAYLOAD / MESSAGE:</label>
-                                    <textarea id="tx-msg" required onkeydown="playKeyClick()" rows="2" class="w-full bg-black/60 border border-current px-2.5 py-1 rounded text-white font-mono focus:outline-none focus:ring-1 focus:ring-amber-400"></textarea>
+                                    <label class="block font-bold opacity-85 mb-0.5">&gt; TRANSMISSION PAYLOAD / MESSAGE:</label>
+                                    <textarea id="tx-msg" required onkeydown="playKeyClick()" rows="2" class="w-full bg-black/60 border border-current px-2 py-0.5 rounded text-white font-mono text-xs sm:text-sm focus:outline-none focus:ring-1 focus:ring-amber-400"></textarea>
                                 </div>
                                 <div class="flex justify-between items-center pt-1">
-                                    <button type="submit" class="px-3 py-1 border-2 border-current rounded font-bold hover:bg-amber-400 hover:text-black transition cursor-pointer">
+                                    <button type="submit" class="px-3 py-1 border-2 border-current rounded font-bold text-xs sm:text-sm hover:bg-amber-400 hover:text-black transition cursor-pointer">
                                         ⚡ TRANSMIT TELEMETRY
                                     </button>
-                                    <span id="tx-status" class="text-xs"></span>
+                                    <span id="tx-status" class="text-xs font-bold"></span>
                                 </div>
                             </form>
                         </div>
-                        <div class="mt-2 text-xs opacity-75 text-center">
+                        <div class="mt-1.5 text-xs opacity-80 text-center">
                             STATUS: Ready for Embedded, IoT &amp; Full-Stack Engagements.
                         </div>
                     </div>
@@ -3745,22 +4197,39 @@
             }
         }
 
-        // Toggle Casing Style (Beige Lab vs Walnut Wood)
-        function toggleCasingStyle() {
-            playKnobClick();
+        // Set & Cycle TV Casing Finishes (9 Authentic Themes from Reference)
+        function setCasing(idx, playSound = true) {
+            if (playSound) playKnobClick();
+            currentCasingIdx = (idx + CASINGS.length) % CASINGS.length;
+            const target = CASINGS[currentCasingIdx];
+            currentChassis = target.id;
+
             const chassis = document.getElementById('tv-chassis');
             const btn = document.getElementById('casing-btn');
-            if (currentChassis === 'beige') {
-                currentChassis = 'wood';
-                chassis.classList.remove('casing-beige');
-                chassis.classList.add('casing-wood');
-                btn.textContent = 'CASING: WALNUT WOOD';
-            } else {
-                currentChassis = 'beige';
-                chassis.classList.remove('casing-wood');
-                chassis.classList.add('casing-beige');
-                btn.textContent = 'CASING: 1989 LAB BEIGE';
+            const shelf = document.querySelector('.shelf');
+
+            if (chassis) {
+                // Clear any existing casing classes
+                CASINGS.forEach(c => chassis.classList.remove(c.cls));
+                chassis.classList.remove('casing-beige', 'casing-wood');
+
+                // Apply selected casing
+                chassis.classList.add(target.cls);
+                if (target.id === 'retro-cream') chassis.classList.add('casing-beige');
+                if (target.id === 'classic-wood') chassis.classList.add('casing-wood');
             }
+
+            if (btn) {
+                btn.textContent = 'CASING: ' + target.short;
+            }
+
+            if (shelf) {
+                shelf.className = 'shelf ' + target.shelfCls;
+            }
+        }
+
+        function toggleCasingStyle() {
+            setCasing(currentCasingIdx + 1, true);
         }
 
         // Cycle Phosphor Themes
