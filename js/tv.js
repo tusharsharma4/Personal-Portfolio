@@ -9,8 +9,8 @@ class TVController {
         this.isPoweredOn = false;
         this.currentChannel = 0;
         this.currentChassis = 'wood'; // 'wood' or 'beige'
-        this.tubeThemes = ['amber', 'green', 'color', 'bw', 'cyan'];
-        this.currentTubeIdx = 0; // default amber (P3)
+        this.tubeThemes = ['bw', 'amber', 'green', 'color', 'cyan'];
+        this.currentTubeIdx = 0; // default mono (B&W)
         
         this.croInstance = null;
         this.arcadeInstance = null;
