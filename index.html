@@ -1246,8 +1246,15 @@
         }
 
         @keyframes pulseMusicLed {
-            from { opacity: 0.6; box-shadow: 0 0 4px #ff3399; }
-            to { opacity: 1; box-shadow: 0 0 9px #ff66cc, 0 0 14px #ff0077; }
+            from {
+                opacity: 0.6;
+                box-shadow: 0 0 4px #ff3399;
+            }
+
+            to {
+                opacity: 1;
+                box-shadow: 0 0 9px #ff66cc, 0 0 14px #ff0077;
+            }
         }
 
         /* 5C. Retro TV Cinema Mode (Fills the CRT Tube, Not the Laptop Screen) */
@@ -1268,7 +1275,7 @@
         }
 
         .active-crt-display.cinema-mode .bk,
-        .active-crt-display.cinema-mode .crt-card > *:not(#yt-player-box) {
+        .active-crt-display.cinema-mode .crt-card>*:not(#yt-player-box) {
             display: none !important;
         }
 
@@ -2160,7 +2167,8 @@
                         <div class="crt-top-bar">
                             <div class="flex items-center gap-3">
                                 <span class="osd-badge" id="osd-channel-code">CH 00</span>
-                                <span id="osd-channel-title" class="font-bold tracking-wider text-lg sm:text-xl">TUSHAR-VISION OS //
+                                <span id="osd-channel-title"
+                                    class="font-bold tracking-wider text-lg sm:text-xl">TUSHAR-VISION OS //
                                     MENU</span>
                             </div>
                             <div class="flex items-center gap-4 text-base sm:text-lg font-bold">
@@ -3078,7 +3086,7 @@
             }, 80);
         }
 
-        function updateRemoteActive() {}
+        function updateRemoteActive() { }
 
         function stopActiveLoops() {
             if (channelSwitchTimeout) {
@@ -3097,7 +3105,7 @@
                     iframe.src = 'about:blank';
                     iframe.remove();
                 });
-            } catch (e) {}
+            } catch (e) { }
         }
 
         /* ----------------------------------------------------
@@ -3143,7 +3151,7 @@
                     <div class="text-xl sm:text-2xl font-bold tracking-wider text-[#ffdc73] leading-tight mb-0.5">${RESUME_DATA.name.toUpperCase()}</div>
                     <div class="text-sm sm:text-base font-bold opacity-90">${RESUME_DATA.title}</div>
                     <div class="text-xs sm:text-sm opacity-85 mt-0.5 leading-snug">
-                        📍 Poornima College of Engineering, Jaipur • CGPA: 8.0/10.0 • Embedded / IoT
+                        📍 Poornima College of Engineering, Jaipur • CGPA: 8.0/10.0
                     </div>
                 </div>
 
@@ -4577,7 +4585,7 @@
                 const fsElement = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
                 if (fsElement) {
                     if (document.exitFullscreen) {
-                        document.exitFullscreen().catch(() => {});
+                        document.exitFullscreen().catch(() => { });
                     } else if (document.webkitExitFullscreen) {
                         document.webkitExitFullscreen();
                     }
