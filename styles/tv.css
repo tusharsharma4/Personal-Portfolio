@@ -5,6 +5,10 @@
    2. 1989 Beige/Cream Lab Broadcast Monitor (Images 3-5)
    ============================================================== */
 
+html {
+    font-size: 18px;
+}
+
 :root {
     --bg-room: #13110e;
     --tube-phosphor: #f59e0b; /* Default Amber P3 */

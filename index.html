@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>TUSHAR-VISION | Tushar Sharma 90's Retro CRT TV Portfolio</title>
     <meta name="description"
         content="Personal portfolio of Tushar Sharma, Electronics & Communication Engineer, styled as an authentic 1980s/90s retro CRT television with live oscilloscope waveforms, procedural audio, and playable arcade games.">
@@ -24,6 +25,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
+        html {
+            font-size: 18px;
+        }
+
         :root {
             --room-bg: #1c1510;
             --tv-tan-light: #cbb894;
@@ -738,8 +743,8 @@
             overflow-y: auto;
             padding-right: 6px;
             position: relative;
-            font-size: clamp(1.05rem, 1.16vw, 1.16rem);
-            line-height: 1.34;
+            font-size: clamp(1.08rem, 1.18vw, 1.2rem);
+            line-height: 1.36;
         }
 
         .channel-viewport::-webkit-scrollbar {
@@ -1205,6 +1210,98 @@
             box-shadow: 0 0 4px #ef4444;
         }
 
+        /* 5B. Secret Bollywood 90s MTV Button (Desktop & Mobile) */
+        .music-badge-btn {
+            background: #111417;
+            border: 1px solid #ff3399;
+            color: #ff85d8;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 1px;
+            padding: 3px 9px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: bold;
+            transition: all 0.15s ease;
+            box-shadow: 0 0 4px rgba(255, 51, 153, 0.2);
+        }
+
+        .music-badge-btn:hover {
+            background: #2b1122;
+            border-color: #ff66cc;
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(255, 51, 153, 0.55);
+        }
+
+        .music-led {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #ff3399;
+            box-shadow: 0 0 6px #ff3399;
+            animation: pulseMusicLed 1.8s infinite alternate ease-in-out;
+        }
+
+        @keyframes pulseMusicLed {
+            from { opacity: 0.6; box-shadow: 0 0 4px #ff3399; }
+            to { opacity: 1; box-shadow: 0 0 9px #ff66cc, 0 0 14px #ff0077; }
+        }
+
+        /* 5C. Retro TV Cinema Mode (Fills the CRT Tube, Not the Laptop Screen) */
+        .active-crt-display.cinema-mode {
+            padding: 0 !important;
+        }
+
+        .active-crt-display.cinema-mode .crt-top-bar {
+            display: none !important;
+        }
+
+        .active-crt-display.cinema-mode .channel-viewport {
+            padding: 0 !important;
+            overflow: hidden !important;
+            position: static !important;
+            height: 100% !important;
+            width: 100% !important;
+        }
+
+        .active-crt-display.cinema-mode .bk,
+        .active-crt-display.cinema-mode .crt-card > *:not(#yt-player-box) {
+            display: none !important;
+        }
+
+        .active-crt-display.cinema-mode .crt-card {
+            padding: 0 !important;
+            margin: 0 !important;
+            border: none !important;
+            background: transparent !important;
+        }
+
+        .active-crt-display.cinema-mode #yt-player-box {
+            position: absolute !important;
+            inset: 0 !important;
+            z-index: 28 !important;
+            width: 100% !important;
+            height: 100% !important;
+            max-height: none !important;
+            border-radius: 0 !important;
+            border: none !important;
+            margin: 0 !important;
+            background: #000 !important;
+        }
+
+        .active-crt-display.cinema-mode #yt-player-box iframe {
+            width: 100% !important;
+            height: 100% !important;
+            border: none !important;
+        }
+
+        .active-crt-display.cinema-mode #tv-fs-overlay-controls {
+            display: flex !important;
+        }
+
         /* 6. Brand Badge */
         .brand-logo {
             order: 6;
@@ -1620,6 +1717,10 @@
 
         /* 1. Ultra-Wide & 4K Displays (1600px+) */
         @media (min-width: 1600px) {
+            html {
+                font-size: 19px;
+            }
+
             :root {
                 --tv-max-w: min(1280px, 92vw, calc((100vh - 70px) * 1.702));
             }
@@ -1637,7 +1738,7 @@
             }
 
             .channel-viewport {
-                font-size: 1.22rem;
+                font-size: 1.26rem;
             }
 
             .control-panel {
@@ -1672,6 +1773,10 @@
 
         /* 2. Large Desktop & Laptops (1200px - 1599px) */
         @media (min-width: 1200px) and (max-width: 1599px) {
+            html {
+                font-size: 18px;
+            }
+
             :root {
                 --tv-max-w: min(1160px, 92vw, calc((100vh - 66px) * 1.702));
             }
@@ -1689,7 +1794,7 @@
             }
 
             .channel-viewport {
-                font-size: 1.14rem;
+                font-size: 1.18rem;
             }
 
             .control-panel {
@@ -1724,6 +1829,10 @@
 
         /* 3. Tablets & Small Laptops (821px - 1199px) */
         @media (min-width: 821px) and (max-width: 1199px) {
+            html {
+                font-size: 17px;
+            }
+
             :root {
                 --tv-max-w: min(1050px, 94vw, calc((100vh - 62px) * 1.702));
             }
@@ -1740,7 +1849,7 @@
             }
 
             .channel-viewport {
-                font-size: 1.08rem;
+                font-size: 1.12rem;
             }
 
             .control-panel {
@@ -1771,6 +1880,10 @@
 
         /* 4. Tablets & Mobile Layout Stack (max-width: 820px) */
         @media (max-width: 820px) {
+            html {
+                font-size: 16.5px;
+            }
+
             body {
                 height: auto !important;
                 min-height: 100vh !important;
@@ -1866,16 +1979,23 @@
 
             .sound-badge-btn {
                 order: 3 !important;
-                padding: 5px 9px !important;
-                font-size: 11px !important;
+                padding: 5px 8px !important;
+                font-size: 10.5px !important;
+            }
+
+            .music-badge-btn {
+                order: 4 !important;
+                padding: 5px 8px !important;
+                font-size: 10.5px !important;
             }
 
             .brand-logo {
-                order: 4 !important;
+                order: 5 !important;
                 font-size: 11px !important;
                 line-height: 1.1 !important;
                 letter-spacing: 1px !important;
                 white-space: nowrap !important;
+                cursor: pointer;
             }
 
             .speaker-grille {
@@ -1913,7 +2033,7 @@
             }
 
             .crt-top-bar {
-                font-size: 0.96rem;
+                font-size: 1.02rem;
                 padding-bottom: 3px;
                 margin-bottom: 4px;
             }
@@ -1926,13 +2046,13 @@
             }
 
             .channel-viewport {
-                font-size: 0.96rem;
+                font-size: 1.02rem;
                 padding-right: 4px;
                 -webkit-overflow-scrolling: touch;
             }
 
             .row {
-                font-size: 0.96rem;
+                font-size: 1.02rem;
                 padding: 0.1em 0.22em;
             }
 
@@ -1944,6 +2064,10 @@
 
         /* 5. Very Compact Phones (max-width: 380px) */
         @media (max-width: 380px) {
+            html {
+                font-size: 15.5px;
+            }
+
             body {
                 padding: 6px 4px !important;
             }
@@ -2101,8 +2225,8 @@
                     <span id="snd-text">SOUND ON</span>
                 </button>
 
-                <!-- Brand Logo -->
-                <div class="brand-logo">
+                <!-- Brand Logo (Secret clickable/tappable easter egg on mobile & desktop) -->
+                <div class="brand-logo" onclick="toggleSecretBollywoodChannel()" title="TUSHAR-VISION">
                     TUSHAR-VISION
                 </div>
 
@@ -2306,7 +2430,84 @@
             { ch: 4, code: "CH 04", title: "PROJECTS BROADCAST ARCHIVE" },
             { ch: 5, code: "CH 05", title: "ACHIEVEMENTS & AWARDS" },
             { ch: 6, code: "CH 06", title: "RETRO ARCADE LAB (GAMES)" },
-            { ch: 7, code: "CH 07", title: "SIGNAL TRANSMITTER & CONTACT" }
+            { ch: 7, code: "CH 07", title: "SIGNAL TRANSMITTER & CONTACT" },
+            { ch: 8, code: "CH 90", title: "90s BOLLYWOOD MTV // CASSETTE DECK", hidden: true }
+        ];
+
+        /* Secret 90s Bollywood & Golden Era Jukebox Playlist */
+        const BOLLYWOOD_SONGS = [
+            {
+                id: "HsroKFDGr_0",
+                title: "Jaane Woh Kaise Log The Jinke",
+                film: "Pyaasa (1957)",
+                artist: "Hemant Kumar • S.D. Burman • Sahir Ludhianvi",
+                tag: "VINTAGE GOLD",
+                desc: "Soulful classic starring Guru Dutt, composed in iconic melancholy style."
+            },
+            {
+                id: "lOyGj_QnbRM",
+                title: "Kisi Ki Muskurahaton Pe Ho Nisar",
+                film: "Anari (1959)",
+                artist: "Mukesh • Shankar-Jaikishan • Shailendra",
+                tag: "RAJ KAPOOR CLASSIC",
+                desc: "The timeless philosophy of joy: Jeena Isi Ka Naam Hai."
+            },
+            {
+                id: "zy6qGk-pufY",
+                title: "Yeh Raaten Yeh Mausam Naddi Ka Kinara",
+                film: "Dilli Ka Thug (1958)",
+                artist: "Kishore Kumar & Asha Bhosle • Ravi",
+                tag: "ROMANTIC DUET",
+                desc: "Moonlit boat serenade starring Kishore Kumar & Nutan under starlit skies."
+            },
+            {
+                id: "CdXPMBb8hVw",
+                title: "Kya Khoob Lagti Ho Badi Sundar Dikhti Ho",
+                film: "Dharmatma (1975)",
+                artist: "Mukesh & Kanchan • Kalyanji-Anandji",
+                tag: "RETRO ROMANCE",
+                desc: "Upbeat retro duet starring Feroz Khan & Hema Malini with vintage synth bass."
+            },
+            {
+                id: "Uxu_-qh5Mvw",
+                title: "Mere Samne Wali Khidki Mein Ek Chand Ka Tukda",
+                film: "Padosan (1968)",
+                artist: "Kishore Kumar • R.D. Burman • Rajendra Krishan",
+                tag: "COMEDY ANTHEM",
+                desc: "Immortal comic romance starring Sunil Dutt, Kishore Kumar & Saira Banu."
+            },
+            {
+                id: "sYSv92i8M58",
+                title: "Rail Gaadi Rail Gaadi Chhuk Chhuk (India's 1st Rap)",
+                film: "Aashirwad (1968)",
+                artist: "Ashok Kumar (Dadamoni) • Vasant Desai",
+                tag: "ASHOK KUMAR VIRAL",
+                desc: "Legendary rhythmic steam-train rapid track that made Bollywood viral history."
+            },
+            {
+                id: "fTauOK8J-U8",
+                title: "Ek Ladki Ko Dekha Toh Aisa Laga",
+                film: "1942: A Love Story (1994)",
+                artist: "Kumar Sanu • R.D. Burman • Javed Akhtar",
+                tag: "R.D. BURMAN MAGIC",
+                desc: "Pancham Da's immortal melodic swan song filled with poetic similes."
+            },
+            {
+                id: "SBfPs-PMGTA",
+                title: "Pehla Nasha Pehla Khumar",
+                film: "Jo Jeeta Wohi Sikandar (1992)",
+                artist: "Udit Narayan & Sadhana Sargam • Jatin-Lalit",
+                tag: "ULTIMATE 90s",
+                desc: "The quintessential 90s slow-motion romance anthem that defined a generation."
+            },
+            {
+                id: "seFeZOgyFsc",
+                title: "Chura Liya Hai Tumne Jo Dil Ko",
+                film: "Yaadon Ki Baaraat (1973)",
+                artist: "Mohammed Rafi & Asha Bhosle • R.D. Burman",
+                tag: "RETRO GROOVE",
+                desc: "Iconic glass tumbler acoustic intro starring Zeenat Aman & Vijay Arora."
+            }
         ];
 
         let isPoweredOn = false;
@@ -2743,14 +2944,19 @@
                 }, 380);
             } else {
                 // TV is turning OFF
+                toggleTvFullscreen(false);
                 stopActiveLoops();
+                currentSubView = null;
                 if (staticAnimId) {
                     cancelAnimationFrame(staticAnimId);
                     staticAnimId = null;
                 }
                 if (staticCanvas) staticCanvas.style.opacity = '0';
                 const viewport = document.getElementById('channel-viewport');
-                if (viewport) viewport.classList.remove('glitch-slice');
+                if (viewport) {
+                    viewport.classList.remove('glitch-slice');
+                    viewport.innerHTML = '';
+                }
 
                 // Active display powers off immediately
                 activeDisplay.classList.remove('powered');
@@ -2782,8 +2988,27 @@
                 promptPowerOn('dial');
                 return;
             }
-            const nextCh = (currentChannel + delta + CHANNELS.length) % CHANNELS.length;
+            // Standard channels are 0-7; channel 8 is the hidden secret Bollywood channel
+            let nextCh;
+            if (currentChannel === 8) {
+                nextCh = delta > 0 ? 0 : 7;
+            } else {
+                nextCh = (currentChannel + delta + 8) % 8;
+            }
             setChannel(nextCh);
+        }
+
+        function toggleSecretBollywoodChannel() {
+            if (!isPoweredOn) {
+                promptPowerOn('channel');
+                return;
+            }
+            // If already on secret channel, toggle back to menu; otherwise tune in
+            if (currentChannel === 8) {
+                setChannel(0);
+            } else {
+                setChannel(8);
+            }
         }
 
         function remoteSelect(chIndex) {
@@ -2797,8 +3022,27 @@
         function updateKnobAngle(chIndex) {
             const dial = document.getElementById('rotary-dial');
             if (dial) {
-                const angle = chIndex * (360 / CHANNELS.length);
+                const angle = chIndex === 8 ? 180 : chIndex * (360 / 8);
                 dial.style.transform = `rotate(${angle}deg)`;
+            }
+        }
+
+        let isTvFullscreen = false;
+
+        function toggleTvFullscreen(forceState = null) {
+            const activeDisplay = document.getElementById('active-crt-display');
+            if (!activeDisplay) return;
+
+            if (forceState !== null) {
+                isTvFullscreen = forceState;
+            } else {
+                isTvFullscreen = !isTvFullscreen;
+            }
+
+            if (isTvFullscreen) {
+                activeDisplay.classList.add('cinema-mode');
+            } else {
+                activeDisplay.classList.remove('cinema-mode');
             }
         }
 
@@ -2809,6 +3053,9 @@
                 return;
             }
 
+            toggleTvFullscreen(false);
+            stopActiveLoops();
+
             currentChannel = chIndex;
             playKnobClick();
             updateKnobAngle(chIndex);
@@ -2817,7 +3064,8 @@
             // Show OSD corner readout for 1.8s
             const osd = document.getElementById('osd-corner');
             if (osd) {
-                osd.textContent = `CH ${String(chIndex).padStart(2, '0')}`;
+                const chCode = CHANNELS[chIndex] ? CHANNELS[chIndex].code : `CH ${String(chIndex).padStart(2, '0')}`;
+                osd.textContent = chCode;
                 osd.classList.add('show');
                 setTimeout(() => osd.classList.remove('show'), 1600);
             }
@@ -2841,6 +3089,15 @@
             if (snakeLoopId) { clearInterval(snakeLoopId); snakeLoopId = null; }
             if (soccerAnimationId) { cancelAnimationFrame(soccerAnimationId); soccerAnimationId = null; }
             if (invadersAnimationId) { cancelAnimationFrame(invadersAnimationId); invadersAnimationId = null; }
+
+            // Stop any playing YouTube video or audio embeds immediately
+            try {
+                const iframes = document.querySelectorAll('#channel-viewport iframe');
+                iframes.forEach(iframe => {
+                    iframe.src = 'about:blank';
+                    iframe.remove();
+                });
+            } catch (e) {}
         }
 
         /* ----------------------------------------------------
@@ -2868,6 +3125,7 @@
                 case 5: viewport.innerHTML = getAchievementsHTML(); break;
                 case 6: viewport.innerHTML = getArcadeHTML(subView); break;
                 case 7: viewport.innerHTML = getContactHTML(); break;
+                case 8: viewport.innerHTML = getBollywoodHTML(subView); break;
             }
         }
 
@@ -2931,7 +3189,7 @@
                     </div>
 
                     <!-- ASCII IC Chip Visual (File 1) -->
-                    <div class="crt-card flex flex-col justify-center items-center text-center font-mono text-[10.5px] sm:text-xs leading-tight">
+                    <div class="crt-card flex flex-col justify-center items-center text-center font-mono text-[11.5px] sm:text-xs leading-tight">
                         <pre class="opacity-90 font-bold">
    ┌──────────────┐
   ─┤1  ●      16├─ VCC
@@ -4030,6 +4288,119 @@
             `;
         }
 
+        // ==========================================
+        // CH 90: SECRET 90s BOLLYWOOD MTV // CASSETTE DECK
+        // ==========================================
+        function getBollywoodHTML(subIdx = null) {
+            if (subIdx === null || subIdx === undefined) {
+                return `
+                    <button class="bk" onclick="setChannel(0)">&lt; back to menu</button>
+                    
+                    <div class="mb-2 p-2 sm:p-2.5 border border-current rounded bg-black/50">
+                        <div class="flex justify-between items-center text-xs border-b border-current/30 pb-0.5 mb-1 font-mono">
+                            <span class="bg-[#ff3399] text-black px-1.5 py-0.5 font-bold tracking-wider text-xs">SECRET MTV DECK</span>
+                            <span class="font-bold text-xs text-[#ffdc73]">DOORDARSHAN 90s NTSC</span>
+                        </div>
+                        <div class="text-lg sm:text-xl font-bold tracking-wider text-[#ff85d8] leading-tight">
+                            📼 90s BOLLYWOOD RETRO CASSETTE JUKEBOX
+                        </div>
+                        <div class="text-xs sm:text-sm opacity-90 mt-0.5">
+                            Golden era &amp; 90s classics from Mukesh, Kishore Kumar, Hemant Kumar, Ashok Kumar &amp; legends.
+                        </div>
+                        <div class="text-xs opacity-80 mt-1 text-[#ffdc73]">
+                            ▶ SELECT ANY TRACK TO TUNE IN CRT YOUTUBE PLAYER:
+                        </div>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        ${BOLLYWOOD_SONGS.map((song, i) => `
+                            <button class="pick w-full text-left cursor-pointer" onclick="setChannel(8, ${i})">
+                                <div class="flex justify-between items-start gap-1">
+                                    <b class="text-sm sm:text-base font-bold text-[#ffdc73]">[TRK-${String(i + 1).padStart(2, '0')}] 🎵 ${song.title}</b>
+                                    <span class="text-[11px] font-bold px-1.5 py-0.5 border border-current rounded shrink-0">${song.tag}</span>
+                                </div>
+                                <div class="text-xs sm:text-sm opacity-90 mt-0.5 font-sans">${song.artist} &bull; <span class="italic">${song.film}</span></div>
+                                <div class="text-xs opacity-75 mt-0.5">${song.desc}</div>
+                            </button>
+                        `).join('')}
+                    </div>
+
+                    <div class="mt-2 text-[11px] opacity-70 text-center font-mono">
+                        💡 HOTKEY: Press <strong>'M'</strong> anytime or tap the <strong>TUSHAR-VISION</strong> logo to toggle this channel.
+                    </div>
+                `;
+            }
+
+            const idx = Math.max(0, Math.min(BOLLYWOOD_SONGS.length - 1, subIdx));
+            const song = BOLLYWOOD_SONGS[idx];
+            const prevIdx = (idx - 1 + BOLLYWOOD_SONGS.length) % BOLLYWOOD_SONGS.length;
+            const nextIdx = (idx + 1) % BOLLYWOOD_SONGS.length;
+
+            return `
+                <button class="bk" onclick="setChannel(8)">&lt; back to playlist</button>
+                
+                <div class="crt-card bg-black/60 p-2 sm:p-2.5 mb-2">
+                    <div class="flex flex-wrap justify-between items-center gap-1 border-b border-current/30 pb-1 mb-2">
+                        <div class="flex items-center gap-2">
+                            <span class="px-1.5 py-0.5 bg-[#ff3399] text-black font-bold text-xs rounded">NOW PLAYING</span>
+                            <span class="font-bold text-sm sm:text-base text-[#ffdc73]">${song.title}</span>
+                        </div>
+                        <span class="text-xs border border-current px-1.5 py-0.5 rounded font-mono">${song.tag}</span>
+                    </div>
+
+                    <!-- YouTube Responsive CRT Player -->
+                    <div id="yt-player-box" class="relative w-full aspect-video max-h-[290px] sm:max-h-[340px] bg-black rounded overflow-hidden border border-current shadow-md mb-2">
+                        <iframe
+                            id="bollywood-yt-frame"
+                            class="w-full h-full"
+                            src="https://www.youtube.com/embed/${song.id}?autoplay=1&rel=0&playsinline=1"
+                            title="${song.title}"
+                            frameborder="0"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share">
+                        </iframe>
+                        <!-- Floating TV Fullscreen Controls (Overlay inside CRT Tube) -->
+                        <div id="tv-fs-overlay-controls" class="hidden absolute top-2.5 inset-x-3 z-50 justify-between items-center pointer-events-auto">
+                            <button onclick="toggleTvFullscreen(false); setChannel(8);" class="bg-black/90 hover:bg-amber-400 hover:text-black text-amber-300 border border-current px-2.5 py-1 rounded text-xs font-bold font-mono transition cursor-pointer shadow-lg flex items-center gap-1">
+                                ◀ PLAYLIST
+                            </button>
+                            <button id="exit-tv-fs-btn" onclick="toggleTvFullscreen(false)" class="bg-black/90 hover:bg-[#ff3399] text-white border border-current px-2.5 py-1 rounded text-xs font-bold font-mono transition cursor-pointer shadow-lg flex items-center gap-1">
+                                🗗 EXIT TV FULLSCREEN (ESC)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Player Controls & Direct YouTube Link -->
+                    <div class="flex flex-wrap justify-between items-center gap-2 pt-1 font-mono">
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <button onclick="setChannel(8, ${prevIdx})" class="px-2.5 py-1 border border-current rounded font-bold text-xs hover:bg-[#ff3399] hover:text-black transition cursor-pointer">
+                                ⏮ PREV
+                            </button>
+                            <button onclick="setChannel(8)" class="px-2.5 py-1 border border-current rounded font-bold text-xs hover:bg-amber-400 hover:text-black transition cursor-pointer">
+                                ◀ PLAYLIST
+                            </button>
+                            <button onclick="setChannel(8, ${nextIdx})" class="px-2.5 py-1 border border-current rounded font-bold text-xs hover:bg-[#ff3399] hover:text-black transition cursor-pointer">
+                                NEXT ⏭
+                            </button>
+                            <button onclick="toggleTvFullscreen(true)" class="px-2.5 py-1 border border-current bg-amber-400 text-black hover:bg-white rounded font-bold text-xs transition cursor-pointer flex items-center gap-1" title="Expand video to fill retro CRT TV screen (F)">
+                                ⛶ TV FULLSCREEN (F)
+                            </button>
+                        </div>
+
+                        <a href="https://www.youtube.com/watch?v=${song.id}" target="_blank" rel="noopener noreferrer" class="px-3 py-1 border-2 border-red-500 bg-red-600/20 text-red-300 hover:bg-red-600 hover:text-white rounded font-bold text-xs sm:text-sm transition flex items-center gap-1.5 cursor-pointer">
+                            ▶ OPEN IN YOUTUBE ↗
+                        </a>
+                    </div>
+
+                    <!-- Metadata -->
+                    <div class="mt-2 text-xs opacity-90 border-t border-current/20 pt-1.5 leading-snug">
+                        <div><span class="opacity-75">SINGER / COMPOSER:</span> <strong>${song.artist}</strong></div>
+                        <div><span class="opacity-75">FILM / ERA:</span> <strong>${song.film}</strong></div>
+                    </div>
+                </div>
+            `;
+        }
+
         /* ----------------------------------------------------
            7. UTILITIES & EVENT HANDLERS
         ---------------------------------------------------- */
@@ -4143,9 +4514,26 @@
             }
         }
 
-        // Keyboard navigation (0-7, Arrow keys, P for Power, G for Grid)
+        // Keyboard navigation (0-7, Arrow keys, P for Power, G for Grid, F for TV Fullscreen)
         window.addEventListener('keydown', (e) => {
             if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+
+            // Escape key exits TV Fullscreen
+            if (e.key === 'Escape') {
+                if (isTvFullscreen) {
+                    toggleTvFullscreen(false);
+                    return;
+                }
+            }
+
+            // F key toggles TV Fullscreen when on Bollywood MTV channel (CH 90) watching a video
+            if (e.key.toLowerCase() === 'f') {
+                if (currentChannel === 8 && currentSubView !== null) {
+                    toggleTvFullscreen();
+                    return;
+                }
+            }
+
             // When actively playing an arcade game on CH 06, pass keyboard inputs directly to game
             if (currentChannel === 6 && currentSubView !== null) return;
 
@@ -4171,6 +4559,8 @@
                 e.preventDefault();
                 powerToggle();
             } else if (e.key.toLowerCase() === 'm') {
+                toggleSecretBollywoodChannel();
+            } else if (e.key.toLowerCase() === 's') {
                 toggleAudioMute();
             } else if (e.key.toLowerCase() === 't') {
                 toggleCasingStyle();
@@ -4179,6 +4569,23 @@
             } else if (e.key.toLowerCase() === 'g') {
                 toggleGridLines();
             }
+        });
+
+        // Intercept any monitor/browser fullscreen events and redirect to Retro TV Tube Fullscreen
+        ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange'].forEach(evt => {
+            document.addEventListener(evt, () => {
+                const fsElement = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+                if (fsElement) {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen().catch(() => {});
+                    } else if (document.webkitExitFullscreen) {
+                        document.webkitExitFullscreen();
+                    }
+                    if (typeof toggleTvFullscreen === 'function') {
+                        toggleTvFullscreen(true);
+                    }
+                }
+            });
         });
 
         // Mouse wheel over rotary dial tunes channels
