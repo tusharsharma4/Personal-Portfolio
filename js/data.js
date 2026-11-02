@@ -171,7 +171,7 @@ window.PORTFOLIO_DATA = {
             tech: ["Embedded Systems", "High-Voltage Circuitry", "Stun LED Array", "Laser Module", "3D Designing", "Tinkercad", "KiCad"],
             metrics: "Multi-modal defense: Shock + Stun Light + Laser + Retractable Claw mechanism",
             badge: "HARDWARE INNOVATION",
-            github: "https://github.com/tusharsharma04",
+            github: "https://github.com/tusharsharma4/Special-Forces-Defense-Glove",
             live: "https://www.tushar-sharma.in"
         },
         {
@@ -184,7 +184,7 @@ window.PORTFOLIO_DATA = {
             tech: ["Embedded C", "ESP32", "Optical Fingerprint Sensor", "Laser Intrusion Grid", "Relay Modules", "Arduino IDE"],
             metrics: "Sub-second biometric response time | Real-time perimeter tripwire alert",
             badge: "AWARD WINNING BUILD",
-            github: "https://github.com/tusharsharma04",
+            github: "https://github.com/tusharsharma4/Smart-Home-Security-System",
             live: "https://www.tushar-sharma.in"
         },
         {
