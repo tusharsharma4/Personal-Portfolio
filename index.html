@@ -24,6 +24,9 @@
     <!-- Tailwind CDN for utility helpers -->
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <!-- EmailJS SDK for Direct Gmail Transmission -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
     <style>
         html {
             font-size: 18px;
@@ -4528,19 +4531,82 @@
             });
         }
 
+        // ==========================================
+        // EMAILJS CLIENT CONFIGURATION (DIRECT TRANSMIT)
+        // ==========================================
+        const EMAILJS_CONFIG = {
+            publicKey: 'oKjTI4o46re9b-s4e',
+            serviceId: 'service_41dlnpp',
+            templateId: 'template_3be1ocs'
+        };
+
+        // Initialize EmailJS with Public Key
+        (function initEmailJS() {
+            if (typeof emailjs !== 'undefined') {
+                try {
+                    emailjs.init({
+                        publicKey: EMAILJS_CONFIG.publicKey
+                    });
+                } catch (err) {
+                    console.warn('EmailJS init notice:', err);
+                }
+            }
+        })();
+
         function handleSendPacket(e) {
             e.preventDefault();
             playKeyClick();
-            const name = document.getElementById('tx-name').value;
+
+            const form = e.target;
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const name = document.getElementById('tx-name')?.value.trim();
+            const email = document.getElementById('tx-email')?.value.trim();
+            const msg = document.getElementById('tx-msg')?.value.trim();
             const status = document.getElementById('tx-status');
-            if (status) {
-                status.innerHTML = `<span style="color:#4aff6b">✓ ACK FROM VU2-TS-JAIPUR! THANKS ${name.toUpperCase()}</span>`;
-                setTimeout(() => {
-                    document.getElementById('tx-name').value = '';
-                    document.getElementById('tx-email').value = '';
-                    document.getElementById('tx-msg').value = '';
-                }, 1000);
+
+            if (!name || !email || !msg) return;
+
+            // If Service ID or Template ID are not yet configured, provide helpful status
+            if (!EMAILJS_CONFIG.serviceId || !EMAILJS_CONFIG.templateId) {
+                if (status) {
+                    status.innerHTML = `<span style="color:#ffbe42">⚠ NEED SERVICE_ID &amp; TEMPLATE_ID</span>`;
+                }
+                console.info('EmailJS: Public Key is connected! Please set your serviceId and templateId in EMAILJS_CONFIG.');
+                return;
             }
+
+            if (status) {
+                status.innerHTML = `<span style="color:#ffbe42" class="animate-pulse">📡 TRANSMITTING RF TELEMETRY...</span>`;
+            }
+            if (submitBtn) submitBtn.disabled = true;
+
+            const templateParams = {
+                name: name,
+                from_name: name,
+                email: email,
+                from_email: email,
+                reply_to: email,
+                message: msg,
+                to_name: "Tushar Sharma"
+            };
+
+            emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, templateParams)
+                .then(() => {
+                    playKnobClick();
+                    if (status) {
+                        status.innerHTML = `<span style="color:#4aff6b">✓ PACKET DELIVERED TO GMAIL! THANKS ${name.toUpperCase()}</span>`;
+                    }
+                    form.reset();
+                })
+                .catch((err) => {
+                    console.error('EmailJS transmit error:', err);
+                    if (status) {
+                        status.innerHTML = `<span style="color:#ff4444">⚠ TRANSMISSION FAILED (${err?.text || 'ERROR'})</span>`;
+                    }
+                })
+                .finally(() => {
+                    if (submitBtn) submitBtn.disabled = false;
+                });
         }
 
         // Set & Cycle TV Casing Finishes (9 Authentic Themes from Reference)
