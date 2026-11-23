@@ -1,0 +1,13 @@
+# Robots.txt for Tushar Sharma's Retro TV Portfolio
+# https://www.tushar-sharma.in/
+
+User-agent: *
+Allow: /
+Allow: /assets/
+Allow: /js/
+
+# Crawl Delay
+Crawl-delay: 1
+
+# XML Sitemap
+Sitemap: https://www.tushar-sharma.in/sitemap.xml
