@@ -27,6 +27,12 @@
     <!-- EmailJS SDK for Direct Gmail Transmission -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
+    <!-- Umami Web Analytics -->
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="60d6d1df-3907-4d30-96da-1c56db095df6"></script>
+
+    <!-- Retro Arcade Suite Engine & Games -->
+    <script src="js/arcade-suite.js"></script>
+
     <style>
         html {
             font-size: 18px;
@@ -3073,11 +3079,26 @@
             }
         }
 
+        let lastArcadeGame = null;
+        let arcadeMenuScrollTop = 0;
+
         function setChannel(chIndex, subView = null) {
             if (chIndex < 0 || chIndex >= CHANNELS.length) return;
             if (!isPoweredOn) {
                 promptPowerOn('channel');
                 return;
+            }
+
+            // Capture last played arcade game and scroll position for seamless back navigation
+            const vp = document.getElementById('channel-viewport');
+            if (currentChannel === 6 && currentSubView === null && subView !== null && vp) {
+                arcadeMenuScrollTop = vp.scrollTop;
+                lastArcadeGame = subView;
+            } else if (currentChannel === 6 && currentSubView !== null && chIndex === 6 && subView === null) {
+                lastArcadeGame = currentSubView;
+            } else if (chIndex !== 6) {
+                lastArcadeGame = null;
+                arcadeMenuScrollTop = 0;
             }
 
             toggleTvFullscreen(false);
@@ -3116,6 +3137,9 @@
             if (snakeLoopId) { clearInterval(snakeLoopId); snakeLoopId = null; }
             if (soccerAnimationId) { cancelAnimationFrame(soccerAnimationId); soccerAnimationId = null; }
             if (invadersAnimationId) { cancelAnimationFrame(invadersAnimationId); invadersAnimationId = null; }
+            if (window.ArcadeSuite) {
+                try { window.ArcadeSuite.stop(); } catch (e) { }
+            }
 
             // Stop any playing YouTube video or audio embeds immediately
             try {
@@ -3141,7 +3165,10 @@
             document.getElementById('osd-channel-title').textContent = chObj.title;
 
             const viewport = document.getElementById('channel-viewport');
-            viewport.scrollTop = 0;
+            const shouldRestoreArcade = (chIndex === 6 && subView === null && lastArcadeGame);
+            if (!shouldRestoreArcade) {
+                viewport.scrollTop = 0;
+            }
 
             switch (chIndex) {
                 case 0: viewport.innerHTML = getMenuHTML(); break;
@@ -3153,6 +3180,20 @@
                 case 6: viewport.innerHTML = getArcadeHTML(subView); break;
                 case 7: viewport.innerHTML = getContactHTML(); break;
                 case 8: viewport.innerHTML = getBollywoodHTML(subView); break;
+            }
+
+            if (shouldRestoreArcade) {
+                const targetGameId = lastArcadeGame;
+                const scrollToTarget = () => {
+                    const targetEl = document.getElementById('arcade-pick-' + targetGameId);
+                    if (targetEl) {
+                        viewport.scrollTop = Math.max(0, targetEl.offsetTop - 8);
+                    } else if (arcadeMenuScrollTop > 0) {
+                        viewport.scrollTop = arcadeMenuScrollTop;
+                    }
+                };
+                scrollToTarget();
+                requestAnimationFrame(scrollToTarget);
             }
         }
 
@@ -3500,8 +3541,18 @@
         }
 
         // ==========================================
-        // CH 06: RETRO ARCADE (SNAKE, SPACE INVADERS & ROBO SOCCER)
+        // CH 06: RETRO ARCADE LAB (12 PLAYABLE GAMES)
         // ==========================================
+        const ARCADE_GAMES_META = {
+            memory: { title: "🧭 REPEAT AFTER ME", hint: "LISTEN: Note melody &bull; REPEAT: [WASD / Arrows / Tap Marks]" },
+            reaction: { title: "💡 SIGNAL LAMP", hint: "Wait for green lamp, then press immediately! [SPACE / Click]" },
+            sheets: { title: "📄 SHEET SIZES (2048)", hint: "SLIDE: [WASD / Arrows / Swipe]. Merge 2 equal sheets to reach A0!" },
+            punch: { title: "🎯 CENTRE PUNCH", hint: "Stamp shrinking center marks before they fade! [SPACE / Aim &amp; Click]" },
+            plane: { title: "✈️ PAPER PLANE", hint: "FLAP: [SPACE / W / Tap]. Fly through narrowing clearance gaps!" },
+            parts: { title: "🚀 LOOSE PARTS", hint: "TURN: [A, D] | THRUST: [W] | FIRE: [SPACE] &bull; Toroidal wrap physics" },
+            stack: { title: "🏗️ STACK LAYERS", hint: "MOVE: [◀, ▶] | ROTATE: [▲/W/ROTATE] | DROP: [▼/S] | HARD DROP: [SPACE/DROP] • Clear rows" },
+        };
+
         function getArcadeHTML(game = null) {
             if (game === null) {
                 return `
@@ -3510,19 +3561,56 @@
                         🎮 RETRO ARCADE LAB // CHOOSE A MINI-GAME:
                     </div>
 
-                    <button class="pick" onclick="setChannel(6, 'snake')">
+                    <!-- Existing Classics -->
+                    <button id="arcade-pick-snake" class="pick" onclick="setChannel(6, 'snake')">
                         <b class="text-sm sm:text-base font-bold">[ 1 ] 🐍 PHOSPHOR SNAKE</b><br>
-                        <span class="text-xs sm:text-sm opacity-90 mt-0.5 block">Eat energy cells, scale your signal line. Keyboard [WASD/Arrows] &amp; Mobile Touch.</span>
+                        <span class="text-xs sm:text-sm opacity-90 mt-0.5 block">Classic CRT Snake. Eat energy cells, scale signal line. [WASD/Arrows] &amp; Mobile Touch.</span>
                     </button>
 
-                    <button class="pick" onclick="setChannel(6, 'invaders')">
+                    <button id="arcade-pick-invaders" class="pick" onclick="setChannel(6, 'invaders')">
                         <b class="text-sm sm:text-base font-bold">[ 2 ] 👾 SPACE INVADERS '89 (CRT ALIEN DEFENDER)</b><br>
                         <span class="text-xs sm:text-sm opacity-90 mt-0.5 block">Defend the CRT tube from marching alien waves! Keyboard &amp; Mobile Touch Arcade Pad.</span>
                     </button>
 
-                    <button class="pick" onclick="setChannel(6, 'soccer')">
-                        <b class="text-sm sm:text-base font-bold">[ 3 ] ⚽ ROBO SOCCER '89 (ESP8266 PONG SIM)</b><br>
-                        <span class="text-xs sm:text-sm opacity-90 mt-0.5 block">Steer your robot paddle vs Analog AI bot. Direct pitch touch &amp; mobile buttons.</span>
+                    <button id="arcade-pick-soccer" class="pick" onclick="setChannel(6, 'soccer')">
+                        <b class="text-sm sm:text-base font-bold">[ 3 ] ⚽ ROBO SOCCER '89 (RULER &amp; RIVET PONG)</b><br>
+                        <span class="text-xs sm:text-sm opacity-90 mt-0.5 block">Drafting board table tennis vs AI bot. First to 5 wins. Mouse, Touch &amp; [W/S].</span>
+                    </button>
+
+                    <!-- Integrated Games from portfolio-main -->
+                    <button id="arcade-pick-memory" class="pick" onclick="setChannel(6, 'memory')">
+                        <b class="text-sm sm:text-base font-bold">[ 4 ] 🧭 REPEAT AFTER ME (SIMON MEMORY COMPASS)</b><br>
+                        <span class="text-xs sm:text-sm opacity-90 mt-0.5 block">4-axis audio-visual melody memory challenge. [WASD/Arrows] or Tap Crosshairs.</span>
+                    </button>
+
+                    <button id="arcade-pick-reaction" class="pick" onclick="setChannel(6, 'reaction')">
+                        <b class="text-sm sm:text-base font-bold">[ 5 ] 💡 SIGNAL LAMP (REACTION TIME TEST)</b><br>
+                        <span class="text-xs sm:text-sm opacity-90 mt-0.5 block">Precision industrial reflex timer. Wait for green lamp, tap to strike! 5-trial benchmark.</span>
+                    </button>
+
+                    <button id="arcade-pick-sheets" class="pick" onclick="setChannel(6, 'sheets')">
+                        <b class="text-sm sm:text-base font-bold">[ 6 ] 📄 SHEET SIZES (2048 PAPER MERGER)</b><br>
+                        <span class="text-xs sm:text-sm opacity-90 mt-0.5 block">Slide ISO 216 drafting sheets (A10 to A0) to merge into full blueprint sheet. [WASD/Swipe].</span>
+                    </button>
+
+                    <button id="arcade-pick-punch" class="pick" onclick="setChannel(6, 'punch')">
+                        <b class="text-sm sm:text-base font-bold">[ 7 ] 🎯 CENTRE PUNCH (PRECISION STAMP PRESS)</b><br>
+                        <span class="text-xs sm:text-sm opacity-90 mt-0.5 block">20-second sheet-metal accuracy drill. Stamp shrinking center marks before they fade!</span>
+                    </button>
+
+                    <button id="arcade-pick-plane" class="pick" onclick="setChannel(6, 'plane')">
+                        <b class="text-sm sm:text-base font-bold">[ 8 ] ✈️ PAPER PLANE (PROCEDURAL FLIGHT FLAPPER)</b><br>
+                        <span class="text-xs sm:text-sm opacity-90 mt-0.5 block">Glide folded paper dart through narrowing architectural clearance columns. [Space/Tap].</span>
+                    </button>
+
+                    <button id="arcade-pick-parts" class="pick" onclick="setChannel(6, 'parts')">
+                        <b class="text-sm sm:text-base font-bold">[ 9 ] 🚀 LOOSE PARTS (VECTOR ASTEROIDS SHOOTER)</b><br>
+                        <span class="text-xs sm:text-sm opacity-90 mt-0.5 block">Vector arrowhead ship vs drifting mechanical parts. Inertia physics &amp; screen wrap.</span>
+                    </button>
+
+                    <button id="arcade-pick-stack" class="pick" onclick="setChannel(6, 'stack')">
+                        <b class="text-sm sm:text-base font-bold">[ 10 ] 🏗️ STACK LAYERS (TETRIS FOUNDATION STACKER)</b><br>
+                        <span class="text-xs sm:text-sm opacity-90 mt-0.5 block">Falling architectural tetromino blocks. Clear rows to lay foundation tech stack layers.</span>
                     </button>
                 `;
             }
@@ -3560,19 +3648,19 @@
                 return `
                     <button class="bk" onclick="setChannel(6)">&lt; back to arcade menu</button>
                     <div class="crt-card flex flex-col items-center py-2 px-1">
-                        <div class="flex justify-between w-full max-w-[320px] mb-1.5 font-mono">
+                        <div class="flex justify-between items-center w-full max-w-[320px] mb-1.5 font-mono">
                             <span class="text-base font-bold">👾 SPACE INVADERS '89</span>
                             <span id="invaders-score" class="text-xs sm:text-sm font-bold text-[#ffdc73]">SCORE: 000 | LIVES: 3</span>
                         </div>
                         <canvas id="invaders-cv" width="340" height="240" class="border-2 border-current bg-black rounded touch-none shadow-md" style="width: 320px; max-width: 95vw; aspect-ratio: 17/12;"></canvas>
                         
                         <!-- Mobile Touch Controller Bar -->
-                        <div class="flex items-center justify-between gap-2 w-full max-w-[320px] mt-2 px-1 select-none">
+                        <div class="flex items-center justify-between w-full max-w-[320px] mt-2 px-1 select-none">
                             <div class="flex gap-2">
-                                <button class="arcade-btn px-4 py-2 text-sm font-bold" id="inv-btn-l" aria-label="Move Left">◀ LEFT</button>
-                                <button class="arcade-btn px-4 py-2 text-sm font-bold" id="inv-btn-r" aria-label="Move Right">RIGHT ▶</button>
+                                <button class="arcade-btn px-3 py-1.5 text-sm font-bold" id="inv-btn-l" aria-label="Move Left">◀ LEFT</button>
+                                <button class="arcade-btn px-3 py-1.5 text-sm font-bold" id="inv-btn-r" aria-label="Move Right">RIGHT ▶</button>
                             </div>
-                            <button class="arcade-btn arcade-fire-btn px-5 py-2 text-sm font-bold" id="inv-btn-f" aria-label="Fire Laser">🔴 FIRE</button>
+                            <button class="arcade-btn arcade-fire-btn px-4 py-1.5 text-sm font-bold" id="inv-btn-f" aria-label="Fire Laser">🔴 FIRE</button>
                         </div>
 
                         <p class="text-xs opacity-85 mt-1.5 font-mono text-center" id="invaders-hint">
@@ -3591,20 +3679,110 @@
                             <span class="text-xs sm:text-sm font-bold whitespace-nowrap">⚽ ROBO SOCCER '89</span>
                             <span id="soccer-score" class="text-xs sm:text-sm font-bold text-[#ffdc73] whitespace-nowrap shrink-0">YOU: 0 | CPU: 0</span>
                         </div>
-                        <canvas id="soccer-canvas" width="340" height="180" class="w-full max-w-[320px] bg-black border-2 border-current cursor-crosshair rounded touch-none" style="aspect-ratio: 17/9;"></canvas>
+                        <canvas id="soccer-canvas" width="320" height="240" class="w-full max-w-[320px] bg-black border-2 border-current cursor-crosshair rounded touch-none" style="aspect-ratio: 4/3;"></canvas>
 
                         <!-- Mobile Touch Paddle Steer Buttons -->
-                        <div class="flex items-center justify-center gap-4 w-full max-w-[320px] mt-2 px-1 select-none">
-                            <button class="arcade-btn px-4 py-1.5 text-sm font-bold" id="soccer-btn-u">▲ STEER UP</button>
-                            <button class="arcade-btn px-4 py-1.5 text-sm font-bold" id="soccer-btn-d">▼ STEER DOWN</button>
+                        <div class="flex items-center justify-center gap-3 w-full max-w-[320px] mt-2 px-1 select-none">
+                            <button class="arcade-btn px-4 py-2 text-sm font-bold" id="soccer-btn-u">▲ STEER UP</button>
+                            <button class="arcade-btn px-4 py-2 text-sm font-bold" id="soccer-btn-d">▼ STEER DOWN</button>
                         </div>
 
                         <p class="text-xs opacity-85 mt-1.5 font-mono text-center">
-                            Move mouse, touch, or use [W/S] or [▲/▼] keys to score!
+                            Move mouse, touch pitch, or use [W/S] or [▲/▼] keys
                         </p>
                     </div>
                 `;
             }
+
+            // Generic Arcade Suite Games
+            const meta = ARCADE_GAMES_META[game] || { title: "🎮 MINI GAME", hint: "Keyboard &amp; Touch supported" };
+            setTimeout(() => startArcadeSuiteGame(game), 50);
+
+            const isStackGame = (game === 'stack');
+            const cardBoxClass = isStackGame ? 'w-full max-w-[380px] sm:max-w-[420px]' : 'w-full max-w-[320px]';
+
+            // Contextual Mobile Buttons
+            let controlsHTML = '';
+            if (game === 'plane') {
+                controlsHTML = `
+                    <div class="flex items-center justify-center gap-2 w-full max-w-[320px] mt-2 px-1 select-none">
+                        <button class="arcade-btn arcade-fire-btn flex-1 py-2 text-sm font-bold" id="arcade-btn-action">FLAP / START [SPACE]</button>
+                        <button class="arcade-btn px-3 py-2 text-xs font-bold hover:text-white" id="arcade-btn-pause">⏸ PAUSE</button>
+                        <button class="arcade-btn px-3 py-2 text-xs font-bold text-amber-400 hover:text-white border-amber-500/60" id="arcade-btn-restart">🔄 RESTART</button>
+                    </div>
+                `;
+            } else if (game === 'stack') {
+                controlsHTML = `
+                    <div class="flex items-center justify-between gap-1 ${cardBoxClass} mt-2 px-1 select-none">
+                        <button class="arcade-btn px-3 py-1.5 text-xs sm:text-sm font-bold" id="arcade-btn-l" title="Move Left">◀</button>
+                        <button class="arcade-btn px-3 py-1.5 text-xs sm:text-sm font-bold" id="arcade-btn-u" title="Rotate Piece">ROTATE</button>
+                        <button class="arcade-btn px-3 py-1.5 text-xs sm:text-sm font-bold" id="arcade-btn-r" title="Move Right">▶</button>
+                        <button class="arcade-btn px-3 py-1.5 text-xs sm:text-sm font-bold arcade-fire-btn" id="arcade-btn-action" title="Drop to Bottom">DROP</button>
+                        <button class="arcade-btn px-3 py-1.5 text-xs sm:text-sm font-bold text-amber-400 hover:text-white border-amber-500/60" id="arcade-btn-restart" title="Restart Game">🔄 RESTART</button>
+                    </div>
+                `;
+            } else if (game === 'parts') {
+                controlsHTML = `
+                    <div class="flex items-center justify-between gap-1 w-full max-w-[320px] mt-2 px-1 select-none">
+                        <button class="arcade-btn px-2 py-1.5 text-xs sm:text-sm font-bold" id="arcade-btn-l" title="Turn Left">↺</button>
+                        <button class="arcade-btn px-2 py-1.5 text-xs sm:text-sm font-bold" id="arcade-btn-u" title="Thrust">▲ THRUST</button>
+                        <button class="arcade-btn px-2 py-1.5 text-xs sm:text-sm font-bold" id="arcade-btn-r" title="Turn Right">↻</button>
+                        <button class="arcade-btn arcade-fire-btn px-3 py-1.5 text-xs sm:text-sm font-bold" id="arcade-btn-action" title="Fire / Start">FIRE</button>
+                        <button class="arcade-btn px-2 py-1.5 text-xs sm:text-sm font-bold hover:text-white" id="arcade-btn-pause" title="Pause / Resume">⏸</button>
+                        <button class="arcade-btn px-2 py-1.5 text-xs sm:text-sm font-bold text-amber-400 hover:text-white border-amber-500/60" id="arcade-btn-restart" title="Restart Game">🔄</button>
+                    </div>
+                `;
+            } else if (game === 'sheets') {
+                controlsHTML = `
+                    <div class="flex items-center justify-center gap-1.5 w-full max-w-[320px] mt-2 px-1 select-none">
+                        <button class="arcade-btn px-3 py-1.5 text-sm font-bold" id="arcade-btn-l">◀</button>
+                        <button class="arcade-btn px-3 py-1.5 text-sm font-bold" id="arcade-btn-u">▲</button>
+                        <button class="arcade-btn px-3 py-1.5 text-sm font-bold" id="arcade-btn-d">▼</button>
+                        <button class="arcade-btn px-3 py-1.5 text-sm font-bold" id="arcade-btn-r">▶</button>
+                        <button class="arcade-btn px-2.5 py-1.5 text-xs sm:text-sm font-bold text-amber-400 hover:text-white border-amber-500/60" id="arcade-btn-restart" title="Restart 2048">🔄 RESTART</button>
+                    </div>
+                `;
+            } else if (game === 'memory') {
+                controlsHTML = `
+                    <div class="flex items-center justify-center gap-2 w-full max-w-[320px] mt-2 px-1 select-none">
+                        <button class="arcade-btn px-2.5 py-1.5 text-xs font-bold" id="arcade-btn-u">▲ ACCENT</button>
+                        <button class="arcade-btn px-2.5 py-1.5 text-xs font-bold" id="arcade-btn-l">◀ BLUE</button>
+                        <button class="arcade-btn px-2.5 py-1.5 text-xs font-bold" id="arcade-btn-d">▼ GREEN</button>
+                        <button class="arcade-btn px-2.5 py-1.5 text-xs font-bold" id="arcade-btn-r">▶ AMBER</button>
+                    </div>
+                `;
+            } else if (game === 'reaction') {
+                controlsHTML = `
+                    <div class="flex items-center justify-center gap-2 w-full max-w-[320px] mt-2 px-1 select-none">
+                        <button class="arcade-btn arcade-fire-btn flex-1 py-2 text-sm font-bold" id="arcade-btn-action">STRIKE / ARM [SPACE/TAP]</button>
+                    </div>
+                `;
+            } else if (game === 'punch') {
+                controlsHTML = `
+                    <div class="flex items-center justify-center gap-2 w-full max-w-[320px] mt-2 px-1 select-none">
+                        <button class="arcade-btn arcade-fire-btn flex-1 py-2 text-sm font-bold" id="arcade-btn-action">STAMP / START [SPACE/TAP]</button>
+                        <button class="arcade-btn px-3 py-2 text-xs font-bold hover:text-white" id="arcade-btn-pause">⏸ PAUSE</button>
+                        <button class="arcade-btn px-3 py-2 text-xs font-bold text-amber-400 hover:text-white border-amber-500/60" id="arcade-btn-restart">🔄 RESTART</button>
+                    </div>
+                `;
+            }
+
+            return `
+                <button class="bk" onclick="setChannel(6)">&lt; back to arcade menu</button>
+                <div class="crt-card flex flex-col items-center py-2 px-1">
+                    <div class="flex items-center justify-between ${cardBoxClass} gap-2 mb-1.5 font-mono">
+                        <span class="text-xs sm:text-sm font-bold whitespace-nowrap">${meta.title}</span>
+                        <span id="arcade-score" class="text-xs sm:text-sm font-bold text-[#ffdc73] whitespace-nowrap shrink-0">SCORE: 0</span>
+                    </div>
+                    <canvas id="arcade-cv" width="${isStackGame ? 360 : 320}" height="${isStackGame ? 270 : 240}" class="w-full ${cardBoxClass} bg-black border-2 border-current cursor-crosshair rounded touch-none shadow-md" style="aspect-ratio: 4/3;"></canvas>
+
+                    ${controlsHTML}
+
+                    <p class="text-xs opacity-85 mt-1.5 font-mono text-center">
+                        ${meta.hint}
+                    </p>
+                </div>
+            `;
         }
 
         /* --- SNAKE GAME ENGINE --- */
@@ -3726,9 +3904,10 @@
                 d = nd;
                 const h = [s[0][0] + d[0], s[0][1] + d[1]];
                 if (h[0] < 0 || h[1] < 0 || h[0] >= N || h[1] >= N || s.some(c => c[0] === h[0] && c[1] === h[1])) {
-                    if (hint) hint.innerHTML = `<span class="text-red-400 font-bold">SIGNAL CRASH!</span> Score: ${sco}. Tap D-Pad, swipe, or press keys to restart.`;
+                    if (hint) hint.innerHTML = `<span class="text-red-400 font-bold">SIGNAL CRASH!</span> Score: ${sco}. Tap D-Pad or swipe to reboot.`;
                     playWarningBeep();
-                    rs(); run = false; dr(); return;
+                    rs(); run = false; dr();
+                    return;
                 }
                 s.unshift(h);
                 if (h[0] === f[0] && h[1] === f[1]) {
@@ -4119,208 +4298,93 @@
             invadersAnimationId = requestAnimationFrame(gameLoop);
         }
 
-        /* --- ROBO SOCCER / PONG ENGINE (File 1) --- */
-        function initRoboSoccerGame() {
-            if (!isPoweredOn) return;
-            const canvas = document.getElementById('soccer-canvas');
+        /* --- ARCADE SUITE ADAPTER & ROBO SOCCER / PONG --- */
+        function startArcadeSuiteGame(gameId) {
+            if (!isPoweredOn || !window.ArcadeSuite) return;
+            const canvas = document.getElementById(gameId === 'soccer' ? 'soccer-canvas' : 'arcade-cv');
             if (!canvas) return;
-            const ctx = canvas.getContext('2d');
+            const scoreEl = document.getElementById(gameId === 'soccer' ? 'soccer-score' : 'arcade-score');
 
-            let playerY = canvas.height / 2 - 20;
-            let cpuY = canvas.height / 2 - 20;
-            const paddleH = 40;
-            const paddleW = 8;
-            const MIN_BALL_SPEED = 3.2;
-            const MAX_BALL_SPEED = 5.2; // Strict upper limit to prevent infinite runaway speed
-            let currentBallSpeed = MIN_BALL_SPEED;
-
-            let ball = { x: canvas.width / 2, y: canvas.height / 2, vx: 3.2, vy: 1.8, r: 5 };
-            let playerScore = 0, cpuScore = 0;
-
-            function handleMove(clientY) {
-                const rect = canvas.getBoundingClientRect();
-                const scaleY = canvas.height / rect.height;
-                const relY = (clientY - rect.top) * scaleY;
-                playerY = Math.max(4, Math.min(canvas.height - paddleH - 4, relY - paddleH / 2));
-            }
-
-            canvas.addEventListener('mousemove', e => handleMove(e.clientY));
-
-            // Touch direct support on pitch
-            canvas.addEventListener('touchstart', e => {
-                if (e.touches.length > 0) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    handleMove(e.touches[0].clientY);
+            window.ArcadeSuite.start(gameId, canvas, {
+                width: gameId === 'stack' ? 260 : 240,
+                height: gameId === 'stack' ? 195 : 180,
+                onScore: (val, text) => {
+                    if (scoreEl) {
+                        scoreEl.textContent = text ? text : (gameId === 'soccer' ? `YOU: ${val} | CPU: 0` : `SCORE: ${val}`);
+                    }
+                },
+                onOver: (summary) => {
+                    if (scoreEl && summary) {
+                        scoreEl.textContent = summary;
+                    }
                 }
-            }, { passive: false });
+            });
 
-            canvas.addEventListener('touchmove', e => {
-                if (e.touches.length > 0) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    handleMove(e.touches[0].clientY);
-                }
-            }, { passive: false });
-
-            // Keyboard navigation (Arrow keys / W / S)
-            const keyHandler = (e) => {
-                if (currentChannel !== 6 || currentSubView !== 'soccer') return;
-                if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
-                    e.preventDefault();
-                    playerY = Math.max(4, playerY - 18);
-                } else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') {
-                    e.preventDefault();
-                    playerY = Math.min(canvas.height - paddleH - 4, playerY + 18);
-                }
-            };
-            window.addEventListener('keydown', keyHandler);
-
-            // Mobile Paddle Steer Buttons
-            const bindSoccerBtn = (id, delta) => {
+            // Mobile Touch Button Key Dispatcher
+            const bindBtn = (id, code) => {
                 const btn = document.getElementById(id);
                 if (!btn) return;
                 const act = (e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    playerY = Math.max(4, Math.min(canvas.height - paddleH - 4, playerY + delta));
+                    window.dispatchEvent(new KeyboardEvent('keydown', { code: code }));
+                    setTimeout(() => {
+                        window.dispatchEvent(new KeyboardEvent('keyup', { code: code }));
+                    }, 120);
                     playKnobClick();
                 };
                 btn.addEventListener('touchstart', act, { passive: false });
                 btn.addEventListener('click', act);
             };
-            bindSoccerBtn('soccer-btn-u', -22);
-            bindSoccerBtn('soccer-btn-d', 22);
 
-            function resetBall(dir) {
-                ball.x = canvas.width / 2;
-                ball.y = canvas.height / 2;
-                currentBallSpeed = MIN_BALL_SPEED;
-                // Launch at a dynamic non-zero angle (never completely horizontal)
-                const launchAngle = (Math.random() * 0.45 + 0.35) * (Math.random() < 0.5 ? 1 : -1);
-                ball.vx = dir * Math.cos(launchAngle) * currentBallSpeed;
-                ball.vy = Math.sin(launchAngle) * currentBallSpeed;
+            bindBtn('soccer-btn-u', 'ArrowUp');
+            bindBtn('soccer-btn-d', 'ArrowDown');
+            bindBtn('arcade-btn-u', 'ArrowUp');
+            bindBtn('arcade-btn-d', 'ArrowDown');
+            bindBtn('arcade-btn-l', 'ArrowLeft');
+            bindBtn('arcade-btn-r', 'ArrowRight');
+            bindBtn('arcade-btn-action', 'Space');
+
+            // Universal Pause Handlers
+            const updatePauseUI = (paused) => {
+                const pBtn = document.getElementById('arcade-btn-pause');
+                if (pBtn) pBtn.textContent = paused ? "▶ RESUME" : "⏸ PAUSE";
+            };
+
+            const handlePause = (e) => {
+                if (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+                playKnobClick();
+                const paused = window.ArcadeSuite.togglePause();
+                updatePauseUI(paused);
+            };
+
+            const pBtn = document.getElementById('arcade-btn-pause');
+            if (pBtn) {
+                pBtn.onclick = handlePause;
+                pBtn.ontouchstart = handlePause;
             }
 
-            function loop() {
-                if (!document.getElementById('soccer-canvas') || currentChannel !== 6 || currentSubView !== 'soccer') return;
-                ball.x += ball.vx;
-                ball.y += ball.vy;
-
-                // Wall collisions (Top & Bottom) with position clamping to prevent trapping
-                if (ball.y - ball.r <= 4) {
-                    ball.y = 4 + ball.r;
-                    ball.vy = Math.abs(ball.vy);
-                } else if (ball.y + ball.r >= canvas.height - 4) {
-                    ball.y = canvas.height - 4 - ball.r;
-                    ball.vy = -Math.abs(ball.vy);
+            // Game Restart Handlers
+            const handleRestart = (e) => {
+                if (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
                 }
-
-                // Balanced CPU AI:
-                // 1. Tracks primarily when the ball is traveling toward the CPU and past midfield
-                // 2. Speed is set to 1.85px/frame (beatable by user's angled shots)
-                // 3. Relaxes toward center when ball is traveling away
-                const cpuCenter = cpuY + paddleH / 2;
-                const cpuSpeed = 1.85;
-
-                if (ball.vx > 0 && ball.x > canvas.width * 0.32) {
-                    const diff = ball.y - cpuCenter;
-                    if (Math.abs(diff) > 10) {
-                        cpuY += (diff > 0 ? cpuSpeed : -cpuSpeed);
-                    }
-                } else if (ball.vx < 0) {
-                    const centerDiff = (canvas.height / 2) - cpuCenter;
-                    if (Math.abs(centerDiff) > 16) {
-                        cpuY += (centerDiff > 0 ? 0.6 : -0.6);
-                    }
-                }
-                cpuY = Math.max(4, Math.min(canvas.height - paddleH - 4, cpuY));
-
-                // Player paddle collision (x = 8, width = 8, right edge = 16)
-                if (ball.x - ball.r <= 16 && ball.x + ball.r >= 6 && ball.y >= playerY - 3 && ball.y <= playerY + paddleH + 3 && ball.vx < 0) {
-                    // Offset: -1.0 (top edge) to +1.0 (bottom edge)
-                    const hitOffset = (ball.y - (playerY + paddleH / 2)) / (paddleH / 2);
-                    const clampedOffset = Math.max(-1, Math.min(1, hitOffset));
-
-                    // Dynamic angle based on where user hits with paddle (enables slicing/angling shots!)
-                    let bounceAngle = clampedOffset * 0.95;
-                    // Ensure minimum angle so ball NEVER travels in a flat straight line
-                    if (Math.abs(bounceAngle) < 0.22) {
-                        bounceAngle = (clampedOffset >= 0 ? 0.22 : -0.22);
-                    }
-
-                    // Controlled speed scaling with strict cap
-                    currentBallSpeed = Math.min(MAX_BALL_SPEED, currentBallSpeed + 0.16);
-                    ball.vx = Math.abs(Math.cos(bounceAngle) * currentBallSpeed);
-                    ball.vy = Math.sin(bounceAngle) * currentBallSpeed;
-                    ball.x = 16 + ball.r;
-                    playKnobClick();
-                }
-
-                // CPU paddle collision (x = canvas.width - 16, width = 8)
-                if (ball.x + ball.r >= canvas.width - 16 && ball.x - ball.r <= canvas.width - 6 && ball.y >= cpuY - 3 && ball.y <= cpuY + paddleH + 3 && ball.vx > 0) {
-                    const hitOffset = (ball.y - (cpuY + paddleH / 2)) / (paddleH / 2);
-                    const clampedOffset = Math.max(-1, Math.min(1, hitOffset));
-
-                    let bounceAngle = clampedOffset * 0.85;
-                    if (Math.abs(bounceAngle) < 0.2) {
-                        bounceAngle = (clampedOffset >= 0 ? 0.2 : -0.2);
-                    }
-
-                    currentBallSpeed = Math.min(MAX_BALL_SPEED, currentBallSpeed + 0.12);
-                    ball.vx = -Math.abs(Math.cos(bounceAngle) * currentBallSpeed);
-                    ball.vy = Math.sin(bounceAngle) * currentBallSpeed;
-                    ball.x = canvas.width - 16 - ball.r;
-                    playKnobClick();
-                }
-
-                // Goal Detection
-                if (ball.x < 0) {
-                    cpuScore++;
-                    updateScore();
-                    playStaticBurst(120);
-                    resetBall(1);
-                } else if (ball.x > canvas.width) {
-                    playerScore++;
-                    updateScore();
-                    playKnobClick();
-                    resetBall(-1);
-                }
-
-                const color = getComputedStyle(document.body).getPropertyValue('--phosphor-main').trim() || '#ffb000';
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                // Pitch markings
-                ctx.strokeStyle = 'rgba(255,255,255,0.2)';
-                ctx.setLineDash([4, 4]);
-                ctx.beginPath();
-                ctx.moveTo(canvas.width / 2, 0); ctx.lineTo(canvas.width / 2, canvas.height);
-                ctx.stroke();
-                ctx.setLineDash([]);
-                ctx.beginPath();
-                ctx.arc(canvas.width / 2, canvas.height / 2, 22, 0, Math.PI * 2);
-                ctx.stroke();
-
-                // Paddles
-                ctx.fillStyle = color;
-                ctx.fillRect(8, playerY, paddleW, paddleH);
-                ctx.fillRect(canvas.width - 16, cpuY, paddleW, paddleH);
-
-                // Ball
-                ctx.beginPath();
-                ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2);
-                ctx.fill();
-
-                soccerAnimationId = requestAnimationFrame(loop);
+                playKnobClick();
+                startArcadeSuiteGame(gameId);
+            };
+            const rBtn = document.getElementById('arcade-btn-restart');
+            if (rBtn) {
+                rBtn.onclick = handleRestart;
+                rBtn.ontouchstart = handleRestart;
             }
+        }
 
-            function updateScore() {
-                const el = document.getElementById('soccer-score');
-                if (el) el.textContent = `YOU: ${playerScore} | CPU: ${cpuScore}`;
-            }
-
-            resetBall(Math.random() < 0.5 ? 1 : -1);
-            soccerAnimationId = requestAnimationFrame(loop);
+        function initRoboSoccerGame() {
+            startArcadeSuiteGame('soccer');
         }
 
         // ==========================================
